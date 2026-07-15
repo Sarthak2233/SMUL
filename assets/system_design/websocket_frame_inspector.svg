@@ -1,0 +1,174 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#161925" />
+      <stop offset="100%" stop-color="#0a0a0f" />
+    </radialGradient>
+    
+    <!-- Box Gradients -->
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+    <linearGradient id="payloadGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#047857" />
+    </linearGradient>
+    <linearGradient id="commandGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ec4899" />
+      <stop offset="100%" stop-color="#be185d" />
+    </linearGradient>
+    
+    <!-- Neon Glow Filter -->
+    <filter id="neonBlue" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-family: 'Outfit', 'Inter', sans-serif; font-size: 24px; fill: #ffffff; font-weight: 700; letter-spacing: 0.5px; }
+    .subtitle { font-family: 'Inter', sans-serif; font-size: 13px; fill: #8b949e; }
+    .header-title { font-family: 'Outfit', sans-serif; font-size: 14px; fill: #ffffff; font-weight: bold; }
+    .code-key { font-family: 'Fira Code', 'Courier New', monospace; font-size: 12px; fill: #a5d6ff; }
+    .code-val { font-family: 'Fira Code', 'Courier New', monospace; font-size: 12px; fill: #56d364; }
+    .code-type { font-family: 'Fira Code', 'Courier New', monospace; font-size: 11px; fill: #ff7b72; font-style: italic; }
+    .annotation-text { font-family: 'Inter', sans-serif; font-size: 11px; fill: #8b949e; }
+    .annotation-bold { font-weight: bold; fill: #c9d1d9; }
+    .grid-line { stroke: #30363d; stroke-dasharray: 2 3; }
+  </style>
+
+  <!-- Background -->
+  <rect width="1000" height="600" rx="12" fill="url(#bgGrad)" />
+
+  <g opacity="0.05">
+    <path d="M 0,50 L 1000,50 M 0,100 L 1000,100 M 0,150 L 1000,150 M 0,200 L 1000,200 M 0,250 L 1000,250 M 0,300 L 1000,300 M 0,350 L 1000,350 M 0,400 L 1000,400 M 0,450 L 1000,450 M 0,500 L 1000,500" stroke="#ffffff" />
+    <path d="M 100,0 L 100,600 M 200,0 L 200,600 M 300,0 L 300,600 M 400,0 L 400,600 M 500,0 L 500,600 M 600,0 L 600,600 M 700,0 L 700,600 M 800,0 L 800,600 M 900,0 L 900,600" stroke="#ffffff" />
+  </g>
+
+  <!-- Title Header -->
+  <text x="40" y="50" class="title">WebSocket Micro-Data Frame Anatomy</text>
+  <text x="40" y="72" class="subtitle">Bitwise layout and JSON schema variables mapped for sub-millisecond execution</text>
+
+  <!-- ==================== OUTBOUND: STATE STREAM FRAME (sim:state) ==================== -->
+  <g transform="translate(40, 110)">
+    <!-- Main Frame Block -->
+    <rect width="420" height="420" rx="8" fill="#131520" stroke="#3b82f6" stroke-width="1.5" />
+    <rect x="0" y="0" width="420" height="35" rx="8" fill="url(#headerGrad)" />
+    <text x="15" y="22" class="header-title">OUTBOUND: SIMULATION STATE (sim:state)</text>
+    <text x="320" y="22" class="header-title" font-size="10px">Server → Client</text>
+
+    <!-- Schema layout description -->
+    <g transform="translate(15, 55)">
+      <!-- Frame action -->
+      <text x="0" y="15" class="code-key">"action": <tspan class="code-val">"sim:state"</tspan> <tspan class="code-type">(string)</tspan></text>
+      <line x1="0" y1="25" x2="390" y2="25" class="grid-line" />
+      
+      <!-- Simulation ID -->
+      <text x="0" y="45" class="code-key">"simulationId": <tspan class="code-val">"9b1deb4d..."</tspan> <tspan class="code-type">(uuid)</tspan></text>
+      <line x1="0" y1="55" x2="390" y2="55" class="grid-line" />
+
+      <!-- Payload details -->
+      <text x="0" y="75" class="code-key">"payload": {</text>
+      
+      <!-- Inner payload variables -->
+      <g transform="translate(20, 0)">
+        <!-- Time -->
+        <text x="0" y="95" class="code-key">"time": <tspan class="code-val">24.5826</tspan> <tspan class="code-type">(float64)</tspan></text>
+        <path d="M 280,90 L 330,90" stroke="#8b949e" stroke-width="1" stroke-dasharray="2 2" />
+        <text x="340" y="94" class="annotation-text" font-size="10px">Simulation epoch in seconds</text>
+        
+        <!-- Objects array -->
+        <text x="0" y="115" class="code-key">"objects": [</text>
+        
+        <!-- Object Item -->
+        <g transform="translate(20, 0)">
+          <text x="0" y="135" class="code-key">{</text>
+          <text x="15" y="155" class="code-key">"id": <tspan class="code-val">"bob_2"</tspan> <tspan class="code-type">(string)</tspan></text>
+          
+          <text x="15" y="175" class="code-key">"position": <tspan class="code-val">[1.2, -0.4, 0.0]</tspan></text>
+          <path d="M 230,170 L 290,170" stroke="#8b949e" stroke-width="1" stroke-dasharray="2 2" />
+          <text x="300" y="174" class="annotation-text" font-size="9px">3D Position vector (meters)</text>
+
+          <text x="15" y="195" class="code-key">"rotation": <tspan class="code-val">[0, 0, 0.707, 0.707]</tspan></text>
+          <path d="M 285,190 L 305,190" stroke="#8b949e" stroke-width="1" stroke-dasharray="2 2" />
+          <text x="312" y="194" class="annotation-text" font-size="9px">Quaternion [x,y,z,w]</text>
+
+          <text x="0" y="215" class="code-key">}</text>
+        </g>
+        <text x="0" y="235" class="code-key">],</text>
+        
+        <!-- Energy metrics -->
+        <text x="0" y="255" class="code-key">"energy": {</text>
+        <g transform="translate(20, 0)">
+          <text x="0" y="275" class="code-key">"kinetic": <tspan class="code-val">12.45</tspan>,</text>
+          <text x="0" y="295" class="code-key">"potential": <tspan class="code-val">-4.12</tspan>,</text>
+          <text x="0" y="315" class="code-key">"total": <tspan class="code-val">8.33</tspan> <tspan class="code-type">(float64)</tspan></text>
+        </g>
+        <text x="0" y="335" class="code-key">}</text>
+      </g>
+      <text x="0" y="355" class="code-key">}</text>
+    </g>
+  </g>
+
+  <!-- ==================== INBOUND: GESTURE COMMAND FRAME (sim:command) ==================== -->
+  <g transform="translate(520, 110)">
+    <!-- Main Frame Block -->
+    <rect width="440" height="420" rx="8" fill="#131520" stroke="#ec4899" stroke-width="1.5" />
+    <rect x="0" y="0" width="440" height="35" rx="8" fill="url(#commandGrad)" />
+    <text x="15" y="22" class="header-title">INBOUND: USER COMMAND (sim:command)</text>
+    <text x="340" y="22" class="header-title" font-size="10px">Client → Server</text>
+
+    <!-- Schema layout description -->
+    <g transform="translate(15, 55)">
+      <!-- Frame action -->
+      <text x="0" y="15" class="code-key">"action": <tspan class="code-val">"sim:command"</tspan> <tspan class="code-type">(string)</tspan></text>
+      <line x1="0" y1="25" x2="410" y2="25" class="grid-line" />
+      
+      <!-- Simulation ID -->
+      <text x="0" y="45" class="code-key">"simulationId": <tspan class="code-val">"9b1deb4d..."</tspan> <tspan class="code-type">(uuid)</tspan></text>
+      <line x1="0" y1="55" x2="410" y2="55" class="grid-line" />
+
+      <!-- Payload details -->
+      <text x="0" y="75" class="code-key">"payload": {</text>
+      
+      <!-- Inner payload variables -->
+      <g transform="translate(20, 0)">
+        <!-- Command type -->
+        <text x="0" y="95" class="code-key">"commandType": <tspan class="code-val">"APPLY_FORCE"</tspan></text>
+        <path d="M 230,90 L 250,90" stroke="#8b949e" stroke-width="1" stroke-dasharray="2 2" />
+        <text x="260" y="94" class="annotation-text" font-size="10px">APPLY_FORCE | GRAB | RELEASE</text>
+
+        <!-- Target Object -->
+        <text x="0" y="120" class="code-key">"targetObjectId": <tspan class="code-val">"bob_2"</tspan> <tspan class="code-type">(string)</tspan></text>
+        <line x1="0" y1="130" x2="390" y2="130" class="grid-line" />
+
+        <!-- Force Vector parameters -->
+        <text x="0" y="155" class="code-key">"vector": <tspan class="code-val">[-15.2, 8.4, 0.0]</tspan> <tspan class="code-type">(float32[3])</tspan></text>
+        <path d="M 230,150 L 250,150" stroke="#8b949e" stroke-width="1" stroke-dasharray="2 2" />
+        <text x="260" y="154" class="annotation-text" font-size="10px">Impulse force vector in Newtons</text>
+        
+        <!-- Force Magnitude -->
+        <text x="0" y="180" class="code-key">"magnitude": <tspan class="code-val">17.36</tspan> <tspan class="code-type">(float32)</tspan></text>
+        <line x1="0" y1="195" x2="390" y2="195" class="grid-line" />
+      </g>
+      <text x="0" y="215" class="code-key">}</text>
+
+      <!-- Frame validation parameters / metadata annotations -->
+      <g transform="translate(0, 240)">
+        <rect width="410" height="110" rx="6" fill="#181a26" stroke="#30363d" />
+        <text x="15" y="25" class="annotation-text annotation-bold">DATA PROTOCOL CONSTRAINTS</text>
+        
+        <circle cx="20" cy="50" r="3" fill="#ec4899" />
+        <text x="32" y="53" class="annotation-text" font-size="10px">Frequency: Server broadcasts state at <tspan class="annotation-bold" fill="#58a6ff">~60Hz</tspan> (16.6ms intervals).</text>
+        
+        <circle cx="20" cy="70" r="3" fill="#ec4899" />
+        <text x="32" y="73" class="annotation-text" font-size="10px">Command Ingestion: Client commands debounced on WebSockets to <tspan class="annotation-bold" fill="#56d364">&lt; 100ms</tspan>.</text>
+
+        <circle cx="20" cy="90" r="3" fill="#ec4899" />
+        <text x="32" y="93" class="annotation-text" font-size="10px">JSON Payload Validation: Runs AST checks at WebSocket Lambda router.</text>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,389 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#1b1c26" />
+      <stop offset="100%" stop-color="#0f0f15" />
+    </radialGradient>
+    
+    <!-- Panel Gradients -->
+    <linearGradient id="panelGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1a1c24" />
+      <stop offset="100%" stop-color="#13141a" />
+    </linearGradient>
+    
+    <!-- Neon Highlights -->
+    <linearGradient id="neonBlue" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0052cc" />
+      <stop offset="100%" stop-color="#58a6ff" />
+    </linearGradient>
+    <linearGradient id="neonPink" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#be185d" />
+      <stop offset="100%" stop-color="#ec4899" />
+    </linearGradient>
+
+    <!-- Glow Filters -->
+    <filter id="activeGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-family: 'Outfit', 'Inter', sans-serif; font-size: 16px; fill: #ffffff; font-weight: 700; }
+    .nav-item { font-family: 'Inter', sans-serif; font-size: 12px; fill: #8b949e; font-weight: 500; cursor: pointer; }
+    .nav-item.active { fill: #58a6ff; font-weight: 600; }
+    .panel-header { font-family: 'Outfit', sans-serif; font-size: 11px; fill: #8b949e; font-weight: 600; letter-spacing: 0.8px; }
+    .code-text { font-family: 'Fira Code', 'Courier New', monospace; font-size: 11px; fill: #a5d6ff; }
+    .code-keyword { fill: #ff7b72; font-weight: 500; }
+    .code-var { fill: #79c0ff; }
+    .code-string { fill: #a5d6ff; }
+    .code-comment { fill: #8b949e; font-style: italic; }
+    .log-info { fill: #58a6ff; }
+    .log-success { fill: #56d364; }
+    .log-error { fill: #ff7b72; }
+    .ui-text { font-family: 'Inter', sans-serif; font-size: 11px; fill: #c9d1d9; }
+    .ui-muted { fill: #8b949e; font-size: 10px; }
+    .ui-bold { font-weight: bold; fill: #ffffff; }
+    .interactive-btn { rx: 4; cursor: pointer; }
+  </style>
+
+  <!-- Main Background -->
+  <rect width="1200" height="800" rx="16" fill="url(#bgGrad)" />
+
+  <!-- Window Frame Border -->
+  <rect x="2" y="2" width="1196" height="796" rx="14" fill="none" stroke="#30363d" stroke-width="2" />
+
+  <!-- ==================== MENU BAR (Top) ==================== -->
+  <rect x="10" y="10" width="1180" height="40" rx="6" fill="#161821" stroke="#30363d" stroke-width="1" />
+  
+  <!-- Window Controls (Mac Style) -->
+  <circle cx="30" cy="30" r="6" fill="#ff5f56" />
+  <circle cx="48" cy="30" r="6" fill="#ffbd2e" />
+  <circle cx="66" cy="30" r="6" fill="#27c93f" />
+
+  <text x="100" y="35" class="title">SMUL GPSE IDE</text>
+  
+  <g transform="translate(240, 0)">
+    <text x="0" y="34" class="nav-item active">Project</text>
+    <text x="60" y="34" class="nav-item">Simulation</text>
+    <text x="140" y="34" class="nav-item">AI Agent</text>
+    <text x="210" y="34" class="nav-item">View</text>
+    <text x="260" y="34" class="nav-item">Tools</text>
+    <text x="310" y="34" class="nav-item">Settings</text>
+  </g>
+
+  <!-- Serverless Status pill -->
+  <g transform="translate(1040, 20)">
+    <rect width="130" height="20" rx="10" fill="#1f2438" stroke="#58a6ff" stroke-width="1" />
+    <circle cx="15" cy="10" r="4" fill="#56d364" />
+    <text x="26" y="14" class="ui-text" font-size="10px" fill="#58a6ff">Fargate Status: Live</text>
+  </g>
+
+  <!-- ==================== FILE EXPLORER (Left) ==================== -->
+  <g transform="translate(10, 60)">
+    <rect width="200" height="730" rx="8" fill="url(#panelGrad)" stroke="#30363d" stroke-width="1.5" />
+    <rect x="0" y="0" width="200" height="30" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1" />
+    <text x="15" y="19" class="panel-header">FILE EXPLORER</text>
+
+    <!-- Folder/File List -->
+    <g transform="translate(15, 50)">
+      <!-- Scenarios Folder -->
+      <polygon points="0,5 5,0 12,0 15,3 25,3 25,18 0,18" fill="#58a6ff" opacity="0.6" />
+      <text x="32" y="14" class="ui-text ui-bold">scenarios/</text>
+
+      <!-- Files in Scenarios -->
+      <g transform="translate(15, 24)">
+        <rect x="0" y="2" width="12" height="14" rx="2" fill="#8b949e" opacity="0.4" />
+        <text x="18" y="13" class="ui-text">double_pendulum.json</text>
+      </g>
+      <g transform="translate(15, 44)">
+        <rect x="0" y="2" width="12" height="14" rx="2" fill="#8b949e" opacity="0.4" />
+        <text x="18" y="13" class="ui-text">cart_pole.json</text>
+      </g>
+      <g transform="translate(15, 64)">
+        <rect x="0" y="2" width="12" height="14" rx="2" fill="#8b949e" opacity="0.4" />
+        <text x="18" y="13" class="ui-text">fluid_vortex.json</text>
+      </g>
+
+      <!-- Scripts Folder -->
+      <g transform="translate(0, 95)">
+        <polygon points="0,5 5,0 12,0 15,3 25,3 25,18 0,18" fill="#58a6ff" opacity="0.6" />
+        <text x="32" y="14" class="ui-text ui-bold">scripts/</text>
+        <g transform="translate(15, 24)">
+          <rect x="0" y="2" width="12" height="14" rx="2" fill="#e1c532" opacity="0.6" />
+          <text x="18" y="13" class="ui-text">pendulum_ode.py</text>
+        </g>
+        <g transform="translate(15, 44)">
+          <rect x="0" y="2" width="12" height="14" rx="2" fill="#e1c532" opacity="0.6" />
+          <text x="18" y="13" class="ui-text">rl_agent.py</text>
+        </g>
+      </g>
+
+      <!-- Models Folder -->
+      <g transform="translate(0, 180)">
+        <polygon points="0,5 5,0 12,0 15,3 25,3 25,18 0,18" fill="#58a6ff" opacity="0.6" />
+        <text x="32" y="14" class="ui-text ui-bold">models/</text>
+        <g transform="translate(15, 24)">
+          <rect x="0" y="2" width="12" height="14" rx="2" fill="#ec4899" opacity="0.6" />
+          <text x="18" y="13" class="ui-text">cartpole_dqn.pt</text>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- ==================== 3D / 2D VIEWPORT (Center-Top) ==================== -->
+  <g transform="translate(220, 60)">
+    <rect width="660" height="420" rx="8" fill="#0c0d12" stroke="#58a6ff" stroke-width="2" filter="url(#activeGlow)" />
+    <rect x="0" y="0" width="660" height="30" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1" />
+    <text x="15" y="19" class="panel-header" fill="#58a6ff">3D VIEWPORT (THREE.JS CANVAS) — RUNNING</text>
+
+    <!-- Camera Control Buttons -->
+    <g transform="translate(480, 5)">
+      <rect width="50" height="20" rx="4" fill="#21262d" />
+      <text x="25" y="13" class="ui-text" font-size="10px" text-anchor="middle">Orbit</text>
+    </g>
+    <g transform="translate(540, 5)">
+      <rect width="50" height="20" rx="4" fill="#21262d" />
+      <text x="25" y="13" class="ui-text" font-size="10px" text-anchor="middle">Top</text>
+    </g>
+    <g transform="translate(600, 5)">
+      <rect width="50" height="20" rx="4" fill="#21262d" />
+      <text x="25" y="13" class="ui-text" font-size="10px" text-anchor="middle">Front</text>
+    </g>
+
+    <!-- 3D Rendered Elements (Double Pendulum Drawing) -->
+    <!-- Grid ground overlay -->
+    <path d="M 50,380 L 610,380 M 50,350 L 610,350 M 50,320 L 610,320 M 50,290 L 610,290" stroke="#1f242e" stroke-width="1" />
+    <path d="M 100,260 L 100,400 M 200,260 L 200,400 M 300,260 L 300,400 M 400,260 L 400,400 M 500,260 L 500,400 M 600,260 L 600,400" stroke="#1f242e" stroke-width="1" />
+    
+    <!-- Coordinate Gizmo -->
+    <g transform="translate(600, 370)">
+      <line x1="0" y1="0" x2="30" y2="0" stroke="#d73a49" stroke-width="2" />
+      <line x1="0" y1="0" x2="0" y2="-30" stroke="#56d364" stroke-width="2" />
+      <line x1="0" y1="0" x2="-20" y2="20" stroke="#58a6ff" stroke-width="2" />
+      <text x="35" y="4" class="ui-muted">X</text>
+      <text x="-5" y="-35" class="ui-muted">Y</text>
+    </g>
+
+    <!-- Pendulum Render -->
+    <!-- Pivot base -->
+    <rect x="310" y="80" width="40" height="8" fill="#30363d" rx="2" />
+    <circle cx="330" cy="84" r="4" fill="#8b949e" />
+    
+    <!-- Link 1 -->
+    <line x1="330" y1="84" x2="400" y2="180" stroke="#ff7b72" stroke-width="4" stroke-linecap="round" />
+    <circle cx="400" cy="180" r="14" fill="#ff4b5c" />
+    <text x="420" y="184" class="ui-text">Bob 1</text>
+    
+    <!-- Link 2 -->
+    <line x1="400" y1="180" x2="350" y2="290" stroke="#58a6ff" stroke-width="4" stroke-linecap="round" />
+    <circle cx="350" cy="290" r="18" fill="#3b76f6" />
+    <text x="375" y="295" class="ui-text">Bob 2</text>
+
+    <!-- Gesture skeleton overlay (MediaPipe tracking indicator) -->
+    <g transform="translate(180, 160)" opacity="0.6">
+      <line x1="20" y1="120" x2="60" y2="90" stroke="#56d364" stroke-width="2" />
+      <line x1="60" y1="90" x2="70" y2="50" stroke="#56d364" stroke-width="2" />
+      <circle cx="20" cy="120" r="4" fill="#ffffff" stroke="#56d364" stroke-width="1.5" />
+      <circle cx="60" cy="90" r="4" fill="#ffffff" stroke="#56d364" stroke-width="1.5" />
+      <!-- Pinch tracker index tip -->
+      <circle cx="70" cy="50" r="6" fill="#84fab0" stroke="#ffffff" stroke-width="2" />
+      <text x="80" y="45" class="ui-text" fill="#84fab0" font-size="9px">MediaPipe Pinch Active</text>
+      <!-- Spring interaction connection line -->
+      <line x1="70" y1="50" x2="170" y2="130" stroke="#e1c532" stroke-width="1.5" stroke-dasharray="3 3" />
+    </g>
+
+    <!-- Live telemetry HUD values -->
+    <g transform="translate(20, 50)">
+      <rect width="180" height="70" rx="6" fill="#141724" stroke="#30363d" stroke-width="1" opacity="0.8" />
+      <text x="12" y="20" class="text-val" font-size="10px">FPS: 60.0</text>
+      <text x="12" y="38" class="text-val" font-size="10px">Time (t): 24.582s</text>
+      <text x="12" y="56" class="text-val" font-size="10px">Energy Loss: 0.12 J/s</text>
+    </g>
+  </g>
+
+  <!-- ==================== LLM CHAT PANEL (Right) ==================== -->
+  <g transform="translate(890, 60)">
+    <rect width="300" height="730" rx="8" fill="url(#panelGrad)" stroke="#30363d" stroke-width="1.5" />
+    <rect x="0" y="0" width="300" height="30" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1" />
+    <text x="15" y="19" class="panel-header">LLM ASSISTANT</text>
+
+    <!-- Scrollable chat thread -->
+    <g transform="translate(15, 50)">
+      <!-- User Input Prompt block -->
+      <rect width="270" height="50" rx="6" fill="#21262d" stroke="#30363d" />
+      <text x="10" y="18" class="ui-muted">User Prompt</text>
+      <text x="10" y="35" class="ui-text">"simulate double pendulum with damping"</text>
+
+      <!-- Assistant response -->
+      <g transform="translate(0, 65)">
+        <rect width="270" height="240" rx="6" fill="#141923" stroke="#2ea44f" stroke-width="1.5" />
+        <rect x="0" y="0" width="270" height="22" rx="6" fill="#202a3a" />
+        <circle cx="12" cy="11" r="4" fill="#2ea44f" />
+        <text x="22" y="14" class="ui-text ui-bold" fill="#2ea44f" font-size="10px">Assistant Plan Derived</text>
+        
+        <!-- Explanation body -->
+        <text x="10" y="40" class="ui-muted" font-size="9px">Deriving Lagrangian equations for 2-D Bobs:</text>
+        <text x="10" y="55" class="ui-text" font-size="10px">L = T - V</text>
+        <text x="10" y="70" class="ui-text" font-size="9px" fill="#a1b0cb">Applying Runge-Kutta 4th order integrator</text>
+        
+        <line x1="10" y1="85" x2="260" y2="85" stroke="#30363d" />
+        
+        <text x="10" y="105" class="ui-text" fill="#84fab0" font-size="10px" font-weight="bold">Generated config structures:</text>
+        <text x="10" y="125" class="code-text" font-size="9px">theta1 = 1.047 (60 degrees)</text>
+        <text x="10" y="140" class="code-text" font-size="9px">damping = 0.05</text>
+        
+        <!-- Code snippet preview trigger -->
+        <rect x="10" y="165" width="250" height="35" rx="4" fill="#12151f" stroke="#30363d" />
+        <text x="20" y="186" class="code-text" font-size="10px" fill="#79c0ff">click to view generated script</text>
+        
+        <!-- Action approval buttons -->
+        <g transform="translate(10, 210)">
+          <rect width="110" height="22" rx="4" fill="#2ea44f" class="interactive-btn" />
+          <text x="55" y="14" class="ui-text ui-bold" text-anchor="middle">Approve &amp; Run</text>
+        </g>
+        <g transform="translate(130, 210)">
+          <rect width="110" height="22" rx="4" fill="#21262d" class="interactive-btn" stroke="#8b949e" stroke-width="0.5" />
+          <text x="55" y="14" class="ui-text" text-anchor="middle">Regenerate</text>
+        </g>
+      </g>
+      
+      <!-- Suggestion chips -->
+      <g transform="translate(0, 320)">
+        <text x="0" y="15" class="ui-muted" font-weight="bold">Suggested Queries</text>
+        <g transform="translate(0, 25)">
+          <rect width="270" height="22" rx="11" fill="#1b2438" stroke="#58a6ff" stroke-width="0.5" />
+          <text x="15" y="14" class="ui-text" font-size="10px" fill="#58a6ff">"Plot phase-space of Bob 2 velocity"</text>
+        </g>
+        <g transform="translate(0, 55)">
+          <rect width="270" height="22" rx="11" fill="#1b2438" stroke="#58a6ff" stroke-width="0.5" />
+          <text x="15" y="14" class="ui-text" font-size="10px" fill="#58a6ff">"Inject reinforcement learning agent"</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- Bottom Input Area -->
+    <g transform="translate(15, 675)">
+      <rect width="270" height="40" rx="20" fill="#21262d" stroke="#30363d" />
+      <text x="20" y="24" class="ui-muted">Ask assistant to modify code...</text>
+      <circle cx="245" cy="20" r="12" fill="#58a6ff" />
+      <path d="M 241,20 L 249,20 M 245,16 L 245,24" stroke="#ffffff" stroke-width="2" />
+    </g>
+  </g>
+
+  <!-- ==================== MONACO CODE EDITOR (Bottom-Left) ==================== -->
+  <g transform="translate(220, 490)">
+    <rect width="290" height="300" rx="8" fill="url(#panelGrad)" stroke="#30363d" stroke-width="1.5" />
+    <rect x="0" y="0" width="290" height="30" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1" />
+    <text x="15" y="19" class="panel-header">MONACO CODE EDITOR</text>
+    <text x="235" y="19" class="code-text" font-size="10px" fill="#84fab0">Python</text>
+
+    <!-- Code Block -->
+    <g transform="translate(15, 50)">
+      <!-- Line numbers -->
+      <g opacity="0.3" font-family="monospace" font-size="10px" fill="#ffffff" text-anchor="end">
+        <text x="15" y="12">1</text>
+        <text x="15" y="32">2</text>
+        <text x="15" y="52">3</text>
+        <text x="15" y="72">4</text>
+        <text x="15" y="92">5</text>
+        <text x="15" y="112">6</text>
+        <text x="15" y="132">7</text>
+        <text x="15" y="152">8</text>
+      </g>
+      
+      <!-- Python text -->
+      <g transform="translate(25, 0)">
+        <text x="0" y="12" class="code-text"><tspan class="code-keyword">import</tspan> numpy <tspan class="code-keyword">as</tspan> np</text>
+        <text x="0" y="32" class="code-text"><tspan class="code-keyword">from</tspan> scipy.integrate <tspan class="code-keyword">import</tspan> solve_ivp</text>
+        
+        <text x="0" y="52" class="code-text"><tspan class="code-keyword">def</tspan> <tspan class="code-var">equations</tspan>(t, y, m1, l1, g):</text>
+        <text x="15" y="72" class="code-text">t1, w1, t2, w2 = y</text>
+        <text x="15" y="92" class="code-text"><tspan class="code-comment"># Lagrangian calculations</tspan></text>
+        <text x="15" y="112" class="code-text">den1 = l1 * (2*m1 + ...)</text>
+        <text x="15" y="132" class="code-text">alpha1 = num1 / den1</text>
+        <text x="15" y="152" class="code-text"><tspan class="code-keyword">return</tspan> [w1, alpha1, ...]</text>
+      </g>
+    </g>
+
+    <!-- Run / Debug toolbar at bottom of editor -->
+    <rect x="0" y="260" width="290" height="40" rx="8" fill="#161b22" />
+    <g transform="translate(15, 268)">
+      <rect width="60" height="24" rx="4" fill="#2ea44f" />
+      <polygon points="25,15 25,25 33,20" fill="#ffffff" />
+      <text x="38" y="16" class="ui-text ui-bold" font-size="9px">RUN</text>
+    </g>
+    <g transform="translate(85, 268)">
+      <rect width="70" height="24" rx="4" fill="#21262d" stroke="#30363d" />
+      <text x="35" y="15" class="ui-text" font-size="9px" text-anchor="middle">Hot Reload</text>
+    </g>
+  </g>
+
+  <!-- ==================== INSPECTOR PANEL (Bottom-Middle) ==================== -->
+  <g transform="translate(520, 490)">
+    <rect width="170" height="300" rx="8" fill="url(#panelGrad)" stroke="#30363d" stroke-width="1.5" />
+    <rect x="0" y="0" width="170" height="30" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1" />
+    <text x="15" y="19" class="panel-header">PROPERTIES</text>
+
+    <!-- Inputs list -->
+    <g transform="translate(15, 50)">
+      <!-- Mass 1 -->
+      <text x="0" y="12" class="ui-muted">Mass 1 (kg)</text>
+      <rect x="0" y="20" width="140" height="24" rx="4" fill="#1f2430" stroke="#30363d" />
+      <text x="10" y="36" class="ui-text">1.5</text>
+
+      <!-- Mass 2 -->
+      <g transform="translate(0, 55)">
+        <text x="0" y="12" class="ui-muted">Mass 2 (kg)</text>
+        <rect x="0" y="20" width="140" height="24" rx="4" fill="#1f2430" stroke="#30363d" />
+        <text x="10" y="36" class="ui-text">2.0</text>
+      </g>
+
+      <!-- Damping -->
+      <g transform="translate(0, 110)">
+        <text x="0" y="12" class="ui-muted">Damping coefficient</text>
+        <!-- slider layout -->
+        <rect x="0" y="25" width="140" height="4" rx="2" fill="#30363d" />
+        <rect x="0" y="25" width="60" height="4" rx="2" fill="#58a6ff" />
+        <circle cx="60" cy="27" r="6" fill="#58a6ff" />
+        <text x="100" y="14" class="ui-text" font-size="10px">c = 0.05</text>
+      </g>
+      
+      <!-- Engine Type selector dropdown -->
+      <g transform="translate(0, 175)">
+        <text x="0" y="12" class="ui-muted">Physics Engine</text>
+        <rect x="0" y="20" width="140" height="24" rx="4" fill="#1f2430" stroke="#30363d" />
+        <text x="10" y="36" class="ui-text ui-bold" fill="#84fab0">SciPy ODE (RK45)</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ==================== CONSOLE / LOG PANEL (Bottom-Right) ==================== -->
+  <g transform="translate(700, 490)">
+    <rect width="180" height="300" rx="8" fill="url(#panelGrad)" stroke="#30363d" stroke-width="1.5" />
+    <rect x="0" y="0" width="180" height="30" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1" />
+    <text x="15" y="19" class="panel-header">CONSOLE / RUNTIME LOGS</text>
+
+    <!-- Log Items -->
+    <g transform="translate(15, 50)" font-family="monospace" font-size="10px">
+      <!-- Item 1 -->
+      <text x="0" y="15" class="log-info">[INFO] Connecting WebSock</text>
+      <!-- Item 2 -->
+      <text x="0" y="35" class="log-success">[OK] WebSocket Tunnel Acti</text>
+      <!-- Item 3 -->
+      <text x="0" y="55" class="log-info">[INFO] Fetching Task Conne</text>
+      <!-- Item 4 -->
+      <text x="0" y="75" class="log-info">[RUN] Starting Solver Step</text>
+      <!-- Item 5 -->
+      <text x="0" y="95" class="log-success">[HUD] State Broadcast @ 60H</text>
+      <!-- Item 6 -->
+      <text x="0" y="115" class="log-info">[CMD] Received Force Vector</text>
+      <!-- Item 7 -->
+      <text x="0" y="135" class="log-info">[INFO] Integration Checkpo</text>
+      <!-- Item 8 -->
+      <text x="0" y="155" class="log-info">[INFO] Integration Checkpo</text>
+      
+    </g>
+  </g>
+</svg>

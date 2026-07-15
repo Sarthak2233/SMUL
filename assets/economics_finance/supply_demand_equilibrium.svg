@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#1c1f2e" />
+      <stop offset="100%" stop-color="#0b0d16" />
+    </radialGradient>
+  </defs>
+
+  <style>
+    .title { font-family: 'Outfit', 'Inter', sans-serif; font-size: 20px; fill: #ffffff; font-weight: 700; }
+    .subtitle { font-family: 'Inter', sans-serif; font-size: 12px; fill: #8b949e; }
+    .text-val { font-family: 'Fira Code', 'Courier New', monospace; font-size: 11px; fill: #e1e4e8; }
+    .text-math { font-family: 'Georgia', serif; font-size: 13px; fill: #cbd5e1; font-style: italic; }
+    .text-bold { font-weight: bold; }
+    .grid-line { stroke: #334155; stroke-dasharray: 4 4; stroke-width: 0.5; }
+    .axis { stroke: #8b949e; stroke-width: 2; }
+    .curve { fill: none; stroke-width: 3.5; stroke-linecap: round; }
+  </style>
+
+  <!-- Background -->
+  <rect width="800" height="500" rx="12" fill="url(#bgGrad)" />
+  
+  <text x="35" y="45" class="title">Scenario: Supply-Demand Market Equilibrium</text>
+  <text x="35" y="65" class="subtitle">Microeconomic price adjustments &amp; consumer/producer surplus (Walrasian auction solver)</text>
+
+  <!-- Axis System (Left side) -->
+  <line x1="80" y1="100" x2="80" y2="400" class="axis" />
+  <line x1="80" y1="400" x2="420" y2="400" class="axis" />
+  
+  <!-- Axis Labels -->
+  <text x="50" y="105" class="text-math text-bold">Price (P)</text>
+  <text x="400" y="425" class="text-math text-bold">Quantity (Q)</text>
+
+  <!-- Shaded Areas (Surplus/Shortage) -->
+  <path d="M 80,180 L 230,270 L 80,270 Z" fill="#38bdf8" fill-opacity="0.1" /> <!-- Consumer Surplus -->
+  <path d="M 80,360 L 230,270 L 80,270 Z" fill="#f43f5e" fill-opacity="0.1" /> <!-- Producer Surplus -->
+
+  <!-- Demand Curve D1 (Blue) -->
+  <path d="M 100,120 L 380,360" class="curve" stroke="#38bdf8" />
+  <text x="390" y="370" class="text-math text-bold" fill="#38bdf8">Demand (D)</text>
+
+  <!-- Supply Curve S1 (Red) -->
+  <path d="M 100,380 L 380,140" class="curve" stroke="#f43f5e" />
+  <text x="390" y="150" class="text-math text-bold" fill="#f43f5e">Supply (S)</text>
+
+  <!-- Equilibrium lines -->
+  <line x1="80" y1="270" x2="230" y2="270" class="grid-line" stroke="#fbbf24" stroke-width="1.5" />
+  <line x1="230" y1="270" x2="230" y2="400" class="grid-line" stroke="#fbbf24" stroke-width="1.5" />
+  
+  <!-- Equilibrium Dot -->
+  <circle cx="230" cy="270" r="6" fill="#fbbf24" />
+  <text x="245" y="265" class="text-math text-bold" fill="#fbbf24">Equilibrium (E*)</text>
+  <text x="45" y="275" class="text-math" fill="#fbbf24">P*</text>
+  <text x="220" y="420" class="text-math" fill="#fbbf24">Q*</text>
+
+  <!-- Surplus/Shortage Text -->
+  <text x="95" y="225" class="text-val" fill="#38bdf8">Consumer Surplus</text>
+  <text x="95" y="325" class="text-val" fill="#f43f5e">Producer Surplus</text>
+
+  <!-- Price Timeline Chart (Right) -->
+  <rect x="490" y="100" width="280" height="230" rx="8" fill="#0d1117" stroke="#334155" />
+  <line x1="510" y1="300" x2="750" y2="300" stroke="#8b949e" stroke-width="1.5" />
+  <line x1="510" y1="130" x2="510" y2="300" stroke="#8b949e" stroke-width="1.5" />
+  <line x1="510" y1="130" x2="750" y2="130" class="grid-line" />
+  <line x1="510" y1="215" x2="750" y2="215" class="grid-line" />
+
+  <!-- Damped Price Adjustment curve -->
+  <path d="M 510,130 Q 560,320 620,240 T 700,215 H 750" fill="none" stroke="#10b981" stroke-width="2.5" />
+  <circle cx="700" cy="215" r="4" fill="#10b981" />
+
+  <text x="525" y="125" class="text-val" fill="#10b981">PRICE OVER TIME P(t)</text>
+  <text x="710" y="240" class="text-val" fill="#fbbf24">P_eq</text>
+
+  <!-- Mathematics Panel (Bottom Right) -->
+  <rect x="490" y="345" width="280" height="110" rx="8" fill="#1e293b" stroke="#334155" />
+  <text x="505" y="370" class="text-val text-bold" fill="#ffffff">MARKET MODEL</text>
+  <text x="505" y="390" class="text-math">Q_d(P) = Q_s(P)  =&gt;  dP/dt = γ(Q_d - Q_s)</text>
+  <text x="505" y="415" class="text-val">Equilibrium Price P*: <tspan fill="#fbbf24">12.50 USD</tspan></text>
+  <text x="505" y="435" class="text-val">Market State: <tspan fill="#10b981">STABLE EQUILIBRIUM</tspan></text>
+</svg>

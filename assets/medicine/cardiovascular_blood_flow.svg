@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#1c1f2e" />
+      <stop offset="100%" stop-color="#0b0d16" />
+    </radialGradient>
+    
+    <!-- Red Blood Cell Gradient -->
+    <radialGradient id="rbcGrad" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#f87171" />
+      <stop offset="100%" stop-color="#b91c1c" />
+    </radialGradient>
+  </defs>
+
+  <style>
+    .title { font-family: 'Outfit', 'Inter', sans-serif; font-size: 20px; fill: #ffffff; font-weight: 700; }
+    .subtitle { font-family: 'Inter', sans-serif; font-size: 12px; fill: #8b949e; }
+    .text-val { font-family: 'Fira Code', 'Courier New', monospace; font-size: 11px; fill: #e1e4e8; }
+    .text-math { font-family: 'Georgia', serif; font-size: 13px; fill: #cbd5e1; font-style: italic; }
+    .text-bold { font-weight: bold; }
+    .grid-line { stroke: #334155; stroke-dasharray: 4 4; stroke-width: 0.5; }
+    .artery-wall { fill: none; stroke: #fda4af; stroke-width: 4; }
+    .constriction { fill: #f43f5e; opacity: 0.2; }
+    .flow-vector { fill: none; stroke: #38bdf8; stroke-width: 1.5; }
+    .rbc { fill: url(#rbcGrad); stroke: #7f1d1d; stroke-width: 0.5; }
+  </style>
+
+  <!-- Background -->
+  <rect width="800" height="500" rx="12" fill="url(#bgGrad)" />
+  
+  <text x="35" y="45" class="title">Scenario: Cardiovascular Hemodynamics</text>
+  <text x="35" y="65" class="subtitle">Laminar blood flow &amp; pressure drops through arterial stenosis (Navier-Stokes fluid solver)</text>
+
+  <!-- Artery Wall Geometry (Left/Center) -->
+  <!-- Constriction is modeled by drawing curves for upper/lower walls -->
+  <!-- Upper Wall -->
+  <path d="M 50,150 L 180,150 C 220,150 220,200 260,200 L 320,200 C 360,200 360,150 450,150" class="artery-wall" />
+  <!-- Lower Wall -->
+  <path d="M 50,290 L 180,290 C 220,290 220,240 260,240 L 320,240 C 360,240 360,290 450,290" class="artery-wall" />
+
+  <!-- Stenosis Plaque / Constriction shading -->
+  <path d="M 180,150 C 220,150 220,200 260,200 L 320,200 C 360,200 360,150 450,150 L 450,290 C 360,290 360,240 320,240 L 260,240 C 220,240 220,290 180,290 Z" class="constriction" />
+
+  <!-- Red Blood Cells (RBCs) -->
+  <!-- Left Side: normal density -->
+  <ellipse cx="80" cy="180" rx="7" ry="4" class="rbc" transform="rotate(15 80 180)" />
+  <ellipse cx="120" cy="200" rx="7" ry="4" class="rbc" transform="rotate(-30 120 200)" />
+  <ellipse cx="90" cy="240" rx="7" ry="4" class="rbc" transform="rotate(45 90 240)" />
+  <ellipse cx="140" cy="260" rx="7" ry="4" class="rbc" transform="rotate(-10 140 260)" />
+  <ellipse cx="150" cy="170" rx="7" ry="4" class="rbc" transform="rotate(20 150 170)" />
+
+  <!-- Constriction: squeezed & elongated -->
+  <ellipse cx="230" cy="215" rx="8" ry="3.5" class="rbc" transform="rotate(5 230 215)" />
+  <ellipse cx="270" cy="220" rx="8" ry="3" class="rbc" transform="rotate(0 270 220)" />
+  <ellipse cx="310" cy="222" rx="8" ry="3" class="rbc" transform="rotate(-5 310 222)" />
+
+  <!-- Right Side: expansion/vortex zone -->
+  <ellipse cx="370" cy="170" rx="7" ry="4" class="rbc" transform="rotate(60 370 170)" />
+  <ellipse cx="390" cy="250" rx="7" ry="4" class="rbc" transform="rotate(-40 390 250)" />
+  <ellipse cx="430" cy="210" rx="7" ry="4" class="rbc" transform="rotate(15 430 210)" />
+
+  <!-- Flow Velocity Profiles (Blue Vectors) -->
+  <!-- Normal Laminar Profile (Left) -->
+  <path d="M 60,220 L 100,220" class="flow-vector" marker-end="url(#blueArrow)" />
+  <path d="M 60,190 L 90,190" class="flow-vector" marker-end="url(#blueArrow)" />
+  <path d="M 60,250 L 90,250" class="flow-vector" marker-end="url(#blueArrow)" />
+  <path d="M 60,165 L 75,165" class="flow-vector" marker-end="url(#blueArrow)" />
+  <path d="M 60,275 L 75,275" class="flow-vector" marker-end="url(#blueArrow)" />
+  <path d="M 75,165 L 90,190 L 100,220 L 90,250 L 75,275" fill="none" stroke="#38bdf8" stroke-width="1" stroke-dasharray="2 2" />
+
+  <!-- High Velocity Profile in Constriction (Center) -->
+  <path d="M 270,220 L 330,220" class="flow-vector" marker-end="url(#blueArrow)" stroke-width="2.5" />
+  <path d="M 270,210 L 320,210" class="flow-vector" marker-end="url(#blueArrow)" />
+  <path d="M 270,230 L 320,230" class="flow-vector" marker-end="url(#blueArrow)" />
+
+  <defs>
+    <marker id="blueArrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4" markerHeight="4" orient="auto">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#38bdf8" />
+    </marker>
+  </defs>
+
+  <!-- Flow Chart (Right) -->
+  <rect x="490" y="100" width="280" height="230" rx="8" fill="#0d1117" stroke="#334155" />
+  <line x1="510" y1="300" x2="750" y2="300" stroke="#8b949e" stroke-width="1.5" />
+  <line x1="510" y1="130" x2="510" y2="300" stroke="#8b949e" stroke-width="1.5" />
+  <line x1="510" y1="130" x2="750" y2="130" class="grid-line" />
+  <line x1="510" y1="215" x2="750" y2="215" class="grid-line" />
+
+  <!-- Velocity (blue) vs Pressure (red) curves -->
+  <path d="M 510,260 L 570,260 Q 610,140 650,150 L 750,230" fill="none" stroke="#38bdf8" stroke-width="2.5" />
+  <path d="M 510,180 L 570,180 Q 610,280 650,270 L 750,200" fill="none" stroke="#f43f5e" stroke-width="2.5" />
+
+  <text x="525" y="125" class="text-val" fill="#38bdf8">STENOSIS TRANSFORMATION</text>
+  <text x="680" y="140" class="text-val" fill="#38bdf8">Velocity</text>
+  <text x="680" y="290" class="text-val" fill="#f43f5e">Pressure</text>
+
+  <!-- Mathematics Panel (Bottom Right) -->
+  <rect x="490" y="345" width="280" height="110" rx="8" fill="#1e293b" stroke="#334155" />
+  <text x="505" y="370" class="text-val text-bold" fill="#ffffff">BERNOULLI FLUID MODEL</text>
+  <text x="505" y="390" class="text-math">P_1 + 1/2 ρ v_1² = P_2 + 1/2 ρ v_2²</text>
+  <text x="505" y="415" class="text-val">Stenosis constriction: <tspan fill="#f43f5e">60% Occlusion</tspan></text>
+  <text x="505" y="435" class="text-val">Wall Shear Stress: <tspan fill="#f59e0b">18.2 Pa</tspan></text>
+</svg>

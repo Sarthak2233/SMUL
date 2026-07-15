@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#1c1f2e" />
+      <stop offset="100%" stop-color="#0b0d16" />
+    </radialGradient>
+    
+    <!-- Path glow -->
+    <filter id="pathGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-family: 'Outfit', 'Inter', sans-serif; font-size: 20px; fill: #ffffff; font-weight: 700; }
+    .subtitle { font-family: 'Inter', sans-serif; font-size: 12px; fill: #8b949e; }
+    .text-val { font-family: 'Fira Code', 'Courier New', monospace; font-size: 11px; fill: #e1e4e8; }
+    .text-math { font-family: 'Georgia', serif; font-size: 13px; fill: #cbd5e1; font-style: italic; }
+    .text-bold { font-weight: bold; }
+    .grid-cell { stroke: #1e293b; stroke-width: 1.5; }
+    .cell-start { fill: #38bdf8; }
+    .cell-end { fill: #10b981; }
+    .cell-wall { fill: #475569; }
+    .cell-open { fill: #f59e0b; fill-opacity: 0.3; }
+    .cell-closed { fill: #a855f7; fill-opacity: 0.2; }
+    .cell-empty { fill: #0d1117; }
+    .astar-path { fill: none; stroke: #38bdf8; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+  </style>
+
+  <!-- Background -->
+  <rect width="800" height="500" rx="12" fill="url(#bgGrad)" />
+  
+  <text x="35" y="45" class="title">Scenario: A* Pathfinding Grid Simulation</text>
+  <text x="35" y="65" class="subtitle">Shortest path routing with heuristic evaluation &amp; obstacle avoidance (Graph search simulator)</text>
+
+  <!-- Grid Search Area (Left Side) -->
+  <!-- 7x7 Grid of cell boxes -->
+  <g transform="translate(80, 110)">
+    <!-- Row 0 -->
+    <rect x="0" y="0" width="40" height="40" class="grid-cell cell-empty" />
+    <rect x="45" y="0" width="40" height="40" class="grid-cell cell-empty" />
+    <rect x="90" y="0" width="40" height="40" class="grid-cell cell-empty" />
+    <rect x="135" y="0" width="40" height="40" class="grid-cell cell-empty" />
+    <rect x="180" y="0" width="40" height="40" class="grid-cell cell-empty" />
+    <rect x="225" y="0" width="40" height="40" class="grid-cell cell-empty" />
+    <rect x="270" y="0" width="40" height="40" class="grid-cell cell-empty" />
+
+    <!-- Row 1 -->
+    <rect x="0" y="45" width="40" height="40" class="grid-cell cell-start" />
+    <rect x="45" y="45" width="40" height="40" class="grid-cell cell-closed" />
+    <rect x="90" y="45" width="40" height="40" class="grid-cell cell-closed" />
+    <rect x="135" y="45" width="40" height="40" class="grid-cell cell-wall" />
+    <rect x="180" y="45" width="40" height="40" class="grid-cell cell-empty" />
+    <rect x="225" y="45" width="40" height="40" class="grid-cell cell-empty" />
+    <rect x="270" y="45" width="40" height="40" class="grid-cell cell-empty" />
+
+    <!-- Row 2 -->
+    <rect x="0" y="90" width="40" height="40" class="grid-cell cell-empty" />
+    <rect x="45" y="90" width="40" height="40" class="grid-cell cell-empty" />
+    <rect x="90" y="90" width="40" height="40" class="grid-cell cell-closed" />
+    <rect x="135" y="90" width="40" height="40" class="grid-cell cell-wall" />
+    <rect x="180" y="90" width="40" height="40" class="grid-cell cell-open" />
+    <rect x="225" y="90" width="40" height="40" class="grid-cell cell-empty" />
+    <rect x="270" y="90" width="40" height="40" class="grid-cell cell-empty" />
+
+    <!-- Row 3 -->
+    <rect x="0" y="135" width="40" height="40" class="grid-cell cell-empty" />
+    <rect x="45" y="135" width="40" height="40" class="grid-cell cell-empty" />
+    <rect x="90" y="135" width="40" height="40" class="grid-cell cell-closed" />
+    <rect x="135" y="135" width="40" height="40" class="grid-cell cell-wall" />
+    <rect x="180" y="135" width="40" height="40" class="grid-cell cell-closed" />
+    <rect x="225" y="135" width="40" height="40" class="grid-cell cell-closed" />
+    <rect x="270" y="135" width="40" height="40" class="grid-cell cell-empty" />
+
+    <!-- Row 4 -->
+    <rect x="0" y="180" width="40" height="40" class="grid-cell cell-empty" />
+    <rect x="45" y="180" width="40" height="40" class="grid-cell cell-empty" />
+    <rect x="90" y="180" width="40" height="40" class="grid-cell cell-open" />
+    <rect x="135" y="180" width="40" height="40" class="grid-cell cell-empty" />
+    <rect x="180" y="180" width="40" height="40" class="grid-cell cell-empty" />
+    <rect x="225" y="180" width="40" height="40" class="grid-cell cell-closed" />
+    <rect x="270" y="180" width="40" height="40" class="grid-cell cell-end" />
+
+    <!-- Optimal Shortest Path cyan line -->
+    <path d="M 20,65 L 65,65 L 110,65 L 110,110 L 110,155 L 155,155 L 200,155 L 245,155 L 245,200 L 290,200" class="astar-path" filter="url(#pathGlow)" />
+  </g>
+
+  <!-- Grid Labels -->
+  <text x="65" y="390" class="text-val" fill="#38bdf8">Start (g=0)</text>
+  <text x="350" y="390" class="text-val" fill="#10b981">End (h=0)</text>
+  <text x="210" y="390" class="text-val" fill="#475569">Obstacle (Wall)</text>
+
+  <!-- Open/Closed Info Panel (Right) -->
+  <rect x="490" y="100" width="280" height="230" rx="8" fill="#0d1117" stroke="#334155" />
+  <text x="505" y="130" class="text-val text-bold" fill="#ffffff">SEARCH QUEUE STATE</text>
+  
+  <text x="505" y="160" class="text-val">Open List (Yellow): <tspan fill="#f59e0b">2 nodes</tspan></text>
+  <text x="505" y="180" class="text-val">Closed List (Purple): <tspan fill="#a855f7">8 nodes</tspan></text>
+  <text x="505" y="200" class="text-val">Calculated Path Cost (g): <tspan fill="#38bdf8">9.41</tspan></text>
+  <text x="505" y="220" class="text-val">Heuristic Method: <tspan fill="#ec4899">Euclidean Distance</tspan></text>
+  
+  <line x1="505" y1="240" x2="755" y2="240" stroke="#334155" />
+  
+  <!-- Math breakdown label -->
+  <text x="505" y="265" class="text-val text-bold" fill="#fbbf24">Node evaluation at (2,3):</text>
+  <text x="505" y="285" class="text-val">g(n) = 3.0, h(n) = 4.12</text>
+  <text x="505" y="305" class="text-val">f(n) = g(n) + h(n) = <tspan fill="#fbbf24">7.12</tspan></text>
+
+  <!-- Mathematics Panel (Bottom Right) -->
+  <rect x="490" y="345" width="280" height="110" rx="8" fill="#1e293b" stroke="#334155" />
+  <text x="505" y="370" class="text-val text-bold" fill="#ffffff">A* SEARCH METRIC</text>
+  <text x="505" y="390" class="text-math">f(n) = g(n) + h(n)</text>
+  <text x="505" y="415" class="text-val">Admissibility: <tspan fill="#10b981">h(n) &lt;= h*(n) (Guaranteed)</tspan></text>
+  <text x="505" y="435" class="text-val">Path Status: <tspan fill="#10b981">OPTIMAL FOUND</tspan></text>
+</svg>

@@ -1,0 +1,187 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#1e2230" />
+      <stop offset="100%" stop-color="#0f111a" />
+    </radialGradient>
+    
+    <!-- Box Gradients -->
+    <linearGradient id="controlGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff7b72" />
+      <stop offset="100%" stop-color="#d73a49" />
+    </linearGradient>
+    <linearGradient id="dataGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#58a6ff" />
+      <stop offset="100%" stop-color="#0052cc" />
+    </linearGradient>
+    <linearGradient id="storageGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#56d364" />
+      <stop offset="100%" stop-color="#2ea44f" />
+    </linearGradient>
+    <linearGradient id="uiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ec4899" />
+      <stop offset="100%" stop-color="#be185d" />
+    </linearGradient>
+    
+    <!-- Neon Glow Filter -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-family: 'Outfit', 'Inter', sans-serif; font-size: 26px; fill: #ffffff; font-weight: 700; letter-spacing: 1px; }
+    .subtitle { font-family: 'Inter', sans-serif; font-size: 14px; fill: #8b949e; }
+    .label { font-family: 'Inter', sans-serif; font-size: 13px; fill: #ffffff; font-weight: 600; text-anchor: middle; }
+    .desc { font-family: 'Inter', sans-serif; font-size: 11px; fill: #e1e4e8; text-anchor: middle; }
+    .arrow-text { font-family: 'Inter', sans-serif; font-size: 10px; fill: #8b949e; text-anchor: middle; font-weight: 500; }
+    .group-label { font-family: 'Outfit', sans-serif; font-size: 16px; font-weight: 600; fill: #8b949e; letter-spacing: 1.5px; }
+    .connection-line { fill: none; stroke-width: 2.5; stroke-linecap: round; }
+  </style>
+
+  <!-- Background -->
+  <rect width="1000" height="600" rx="16" fill="url(#bgGrad)" />
+
+  <!-- Grid Pattern Overlay for Tech Aesthetics -->
+  <g opacity="0.05">
+    <path d="M 0,50 L 1000,50 M 0,100 L 1000,100 M 0,150 L 1000,150 M 0,200 L 1000,200 M 0,250 L 1000,250 M 0,300 L 1000,300 M 0,350 L 1000,350 M 0,400 L 1000,400 M 0,450 L 1000,450 M 0,500 L 1000,500 M 0,550 L 1000,550" stroke="#ffffff" stroke-width="1"/>
+    <path d="M 100,0 L 100,600 M 200,0 L 200,600 M 300,0 L 300,600 M 400,0 L 400,600 M 500,0 L 500,600 M 600,0 L 600,600 M 700,0 L 700,600 M 800,0 L 800,600 M 900,0 L 900,600" stroke="#ffffff" stroke-width="1"/>
+  </g>
+
+  <!-- Document Header -->
+  <text x="40" y="55" class="title">SMUL GPSE — Data Flow &amp; Orchestration Topology</text>
+  <text x="40" y="80" class="subtitle">Real-time variables mapping across serverless layers</text>
+
+  <!-- Bounds/Group Sections -->
+  <!-- Control Plane Container -->
+  <rect x="250" y="110" width="220" height="450" rx="12" fill="none" stroke="#d73a49" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.5" />
+  <text x="360" y="135" class="group-label" text-anchor="middle">CONTROL PLANE</text>
+
+  <!-- Data Plane Container -->
+  <rect x="520" y="110" width="440" height="450" rx="12" fill="none" stroke="#58a6ff" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.5" />
+  <text x="740" y="135" class="group-label" text-anchor="middle">DATA PLANE (REAL-TIME LOOP)</text>
+
+  <!-- ==================== NODES ==================== -->
+
+  <!-- Node: User Prompt -->
+  <g transform="translate(40, 160)">
+    <rect width="160" height="60" rx="10" fill="url(#uiGrad)" />
+    <text x="80" y="27" class="label">User Web Interface</text>
+    <text x="80" y="45" class="desc">Three.js / Monaco / NLP</text>
+  </g>
+
+  <!-- Node: MediaPipe UI -->
+  <g transform="translate(40, 410)">
+    <rect width="160" height="60" rx="10" fill="url(#uiGrad)" />
+    <text x="80" y="27" class="label">MediaPipe Gestures</text>
+    <text x="80" y="45" class="desc">Landmarks &amp; Pinch</text>
+  </g>
+
+  <!-- Node: LLM Lambda -->
+  <g transform="translate(280, 160)">
+    <rect width="160" height="60" rx="10" fill="url(#controlGrad)" />
+    <text x="80" y="27" class="label">LLM Parser (Lambda)</text>
+    <text x="80" y="45" class="desc">LangChain / AST check</text>
+  </g>
+
+  <!-- Node: SQS Queue -->
+  <g transform="translate(280, 280)">
+    <rect width="160" height="60" rx="10" fill="url(#storageGrad)" />
+    <text x="80" y="27" class="label">SQS FIFO Queue</text>
+    <text x="80" y="45" class="desc">Ordered Configs &amp; Cmds</text>
+  </g>
+
+  <!-- Node: DB / S3 -->
+  <g transform="translate(280, 410)">
+    <rect width="160" height="60" rx="10" fill="url(#storageGrad)" />
+    <text x="80" y="27" class="label">DynamoDB + S3</text>
+    <text x="80" y="45" class="desc">Persistent metadata</text>
+  </g>
+
+  <!-- Node: Fargate Runner -->
+  <g transform="translate(560, 160)">
+    <rect width="160" height="60" rx="10" fill="url(#dataGrad)" filter="url(#glow)"/>
+    <text x="80" y="27" class="label">Fargate Engine</text>
+    <text x="80" y="45" class="desc">60Hz Physics &amp; Agent</text>
+  </g>
+
+  <!-- Node: ElastiCache Redis -->
+  <g transform="translate(560, 280)">
+    <rect width="160" height="60" rx="10" fill="url(#storageGrad)" />
+    <text x="80" y="27" class="label">ElastiCache Redis</text>
+    <text x="80" y="45" class="desc">Live State &amp; TTL Locks</text>
+  </g>
+
+  <!-- Node: WebSocket Gateway -->
+  <g transform="translate(770, 160)">
+    <rect width="160" height="60" rx="10" fill="url(#dataGrad)" />
+    <text x="80" y="27" class="label">API GW (WebSockets)</text>
+    <text x="80" y="45" class="desc">Connection broadcast</text>
+  </g>
+
+  <!-- Node: Fargate Spot Trainer -->
+  <g transform="translate(770, 410)">
+    <rect width="160" height="60" rx="10" fill="url(#dataGrad)" />
+    <text x="80" y="27" class="label">Fargate Spot Trainer</text>
+    <text x="80" y="45" class="desc">Async Policy Training</text>
+  </g>
+
+  <!-- ==================== CONNECTIONS ==================== -->
+
+  <!-- Connection: User -> LLM Lambda -->
+  <path d="M 200,190 L 280,190" class="connection-line" stroke="#ec4899" />
+  <polygon points="278,190 270,185 270,195" fill="#ec4899" />
+  <text x="240" y="180" class="arrow-text">Prompt String</text>
+
+  <!-- Connection: LLM -> SQS -->
+  <path d="M 360,220 L 360,280" class="connection-line" stroke="#ff7b72" />
+  <polygon points="360,278 355,270 365,270" fill="#ff7b72" />
+  <text x="390" y="250" class="arrow-text">Parsed Config</text>
+
+  <!-- Connection: SQS -> Fargate -->
+  <path d="M 440,310 L 510,310 L 510,190 L 560,190" class="connection-line" stroke="#56d364" />
+  <polygon points="558,190 550,185 550,195" fill="#56d364" />
+  <text x="495" y="240" class="arrow-text">Init Parameters</text>
+
+  <!-- Connection: LLM -> DB/S3 -->
+  <path d="M 410,220 L 410,410" class="connection-line" stroke="#ff7b72" stroke-dasharray="4 4" />
+  <polygon points="410,408 405,400 415,400" fill="#ff7b72" />
+
+  <!-- Connection: Fargate -> Redis -->
+  <path d="M 640,220 L 640,280" class="connection-line" stroke="#58a6ff" />
+  <polygon points="640,278 635,270 645,270" fill="#58a6ff" />
+  <polygon points="640,222 635,230 645,230" fill="#58a6ff" />
+  <text x="685" y="255" class="arrow-text">State Write / Read</text>
+
+  <!-- Connection: Fargate -> WebSockets -->
+  <path d="M 720,190 L 770,190" class="connection-line" stroke="#58a6ff" />
+  <polygon points="768,190 760,185 760,195" fill="#58a6ff" />
+  <text x="745" y="180" class="arrow-text">Frame Output</text>
+
+  <!-- Connection: WebSockets -> User UI -->
+  <path d="M 850,160 L 850,100 L 120,100 L 120,160" class="connection-line" stroke="#58a6ff" />
+  <polygon points="120,158 115,150 125,150" fill="#58a6ff" />
+  <text x="485" y="90" class="arrow-text">WS Frame stream (60 FPS JSON state)</text>
+
+  <!-- Connection: MediaPipe -> WS -->
+  <path d="M 200,440 L 250,440 L 250,580 L 880,580 L 880,220" class="connection-line" stroke="#ec4899" />
+  <polygon points="880,222 875,230 885,230" fill="#ec4899" />
+  <text x="565" y="570" class="arrow-text">Gesture actions (sim:command)</text>
+
+  <!-- Connection: WS -> SQS Control -->
+  <path d="M 770,205 L 750,205 L 750,340 L 440,340" class="connection-line" stroke="#d73a49" stroke-dasharray="4 4" />
+  <polygon points="442,340 450,335 450,345" fill="#d73a49" />
+  <text x="495" y="355" class="arrow-text">Control Queue Injection</text>
+
+  <!-- Connection: Fargate Spot Trainer -> S3 -->
+  <path d="M 770,440 L 440,440" class="connection-line" stroke="#58a6ff" />
+  <polygon points="442,440 450,435 450,445" fill="#58a6ff" />
+  <text x="535" y="430" class="arrow-text">Weights Checkpoint (.pt)</text>
+
+  <!-- Connection: Fargate -> Fargate Spot Trainer -->
+  <path d="M 720,205 L 735,205 L 735,420 L 770,420" class="connection-line" stroke="#58a6ff" stroke-dasharray="4 4" />
+  <polygon points="768,420 760,415 760,425" fill="#58a6ff" />
+  <text x="750" y="320" class="arrow-text" transform="rotate(90, 750, 320)">Trigger Training</text>
+</svg>

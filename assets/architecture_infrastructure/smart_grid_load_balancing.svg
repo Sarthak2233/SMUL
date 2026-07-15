@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#1c1f2e" />
+      <stop offset="100%" stop-color="#0b0d16" />
+    </radialGradient>
+    
+    <!-- Node glow -->
+    <filter id="gridGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-family: 'Outfit', 'Inter', sans-serif; font-size: 20px; fill: #ffffff; font-weight: 700; }
+    .subtitle { font-family: 'Inter', sans-serif; font-size: 12px; fill: #8b949e; }
+    .text-val { font-family: 'Fira Code', 'Courier New', monospace; font-size: 11px; fill: #e1e4e8; }
+    .text-math { font-family: 'Georgia', serif; font-size: 13px; fill: #cbd5e1; font-style: italic; }
+    .text-bold { font-weight: bold; }
+    .grid-line { stroke: #334155; stroke-dasharray: 4 4; stroke-width: 0.5; }
+    .power-line { fill: none; stroke: #475569; stroke-width: 2.5; }
+    .live-power { fill: none; stroke: #38bdf8; stroke-width: 3; stroke-dasharray: 8 3; }
+    .substation { fill: #1e293b; stroke: #38bdf8; stroke-width: 2.5; }
+    .consumer { fill: #1e293b; stroke: #10b981; stroke-width: 2; }
+    .generator { fill: #1e293b; stroke: #f59e0b; stroke-width: 2; }
+  </style>
+
+  <!-- Background -->
+  <rect width="800" height="500" rx="12" fill="url(#bgGrad)" />
+  
+  <text x="35" y="45" class="title">Scenario: Smart Grid Load Balancing</text>
+  <text x="35" y="65" class="subtitle">Real-time matching of power generation and dynamic consumer load (AC Power Flow network solver)</text>
+
+  <!-- Power Generation Nodes (Left) -->
+  <!-- Wind Turbine -->
+  <rect x="70" y="120" width="70" height="40" rx="4" class="generator" />
+  <text x="80" y="144" class="text-val" fill="#f59e0b">WindGen</text>
+  
+  <!-- Solar Array -->
+  <rect x="70" y="200" width="70" height="40" rx="4" class="generator" />
+  <text x="80" y="224" class="text-val" fill="#f59e0b">SolarPV</text>
+
+  <!-- Gas Turbine (Baseload) -->
+  <rect x="70" y="280" width="70" height="40" rx="4" class="generator" />
+  <text x="85" y="304" class="text-val" fill="#f59e0b">Thermal</text>
+
+  <!-- Central Substation (Center) -->
+  <rect x="230" y="190" width="80" height="60" rx="6" class="substation" filter="url(#gridGlow)" />
+  <text x="240" y="225" class="text-val text-bold" fill="#38bdf8">SUBSTATION</text>
+
+  <!-- Consumers (Right side of Substation) -->
+  <!-- Industrial Load -->
+  <rect x="380" y="150" width="80" height="40" rx="4" class="consumer" />
+  <text x="390" y="174" class="text-val" fill="#10b981">Industry</text>
+
+  <!-- Residential Load -->
+  <rect x="380" y="250" width="80" height="40" rx="4" class="consumer" />
+  <text x="395" y="274" class="text-val" fill="#10b981">Housing</text>
+
+  <!-- Battery Energy Storage System (BESS) -->
+  <rect x="230" y="320" width="80" height="40" rx="4" fill="#1e293b" stroke="#ec4899" stroke-width="2" />
+  <text x="245" y="344" class="text-val" fill="#ec4899">BESS (±)</text>
+
+  <!-- Power Lines -->
+  <!-- Generators to Substation -->
+  <path d="M 140,140 L 190,140 L 190,210 L 230,210" class="live-power" />
+  <path d="M 140,220 L 230,220" class="live-power" />
+  <path d="M 140,300 L 190,300 L 190,230 L 230,230" class="power-line" /> <!-- inactive/low flow -->
+
+  <!-- Substation to Consumers -->
+  <path d="M 310,210 L 350,210 L 350,170 L 380,170" class="live-power" />
+  <path d="M 310,220 L 350,220 L 350,270 L 380,270" class="live-power" />
+
+  <!-- Substation to Battery -->
+  <path d="M 270,250 L 270,320" class="live-power" stroke="#ec4899" />
+
+  <!-- Load Curve Chart (Right) -->
+  <rect x="490" y="100" width="280" height="230" rx="8" fill="#0d1117" stroke="#334155" />
+  <line x1="510" y1="300" x2="750" y2="300" stroke="#8b949e" stroke-width="1.5" />
+  <line x1="510" y1="130" x2="510" y2="300" stroke="#8b949e" stroke-width="1.5" />
+  <line x1="510" y1="130" x2="750" y2="130" class="grid-line" />
+  <line x1="510" y1="215" x2="750" y2="215" class="grid-line" />
+
+  <!-- Generation (yellow dashed) vs Load (green solid) -->
+  <path d="M 510,280 Q 560,250 600,160 T 670,220 T 750,270" fill="none" stroke="#f59e0b" stroke-dasharray="4 2" stroke-width="2.5" />
+  <path d="M 510,270 C 540,260 570,170 610,180 C 650,190 690,250 750,265" fill="none" stroke="#10b981" stroke-width="2.5" />
+
+  <text x="525" y="125" class="text-val" fill="#10b981">POWER FLOW DEMAND MATCH</text>
+  <text x="700" y="200" class="text-val" fill="#f59e0b">Supply</text>
+  <text x="700" y="285" class="text-val" fill="#10b981">Load</text>
+
+  <!-- Mathematics Panel (Bottom Right) -->
+  <rect x="490" y="345" width="280" height="110" rx="8" fill="#1e293b" stroke="#334155" />
+  <text x="505" y="370" class="text-val text-bold" fill="#ffffff">GRID POWER BALANCE</text>
+  <text x="505" y="390" class="text-math">P_gen(t) = P_load(t) + P_loss(t) + dE_stor/dt</text>
+  <text x="505" y="415" class="text-val">Grid Frequency: <tspan fill="#10b981">50.02 Hz</tspan></text>
+  <text x="505" y="435" class="text-val">Battery State: <tspan fill="#ec4899">CHARGING (+15 MW)</tspan></text>
+</svg>

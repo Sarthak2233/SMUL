@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#191c26" />
+      <stop offset="100%" stop-color="#0a0c12" />
+    </radialGradient>
+    
+    <!-- Cart and Pole styling -->
+    <linearGradient id="cartGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#a1c4fd" />
+      <stop offset="100%" stop-color="#c2e9fb" />
+    </linearGradient>
+    
+    <radialGradient id="poleTipGrad" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#ffecd2" />
+      <stop offset="100%" stop-color="#fcb69f" />
+    </radialGradient>
+    
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-family: 'Outfit', 'Inter', sans-serif; font-size: 20px; fill: #ffffff; font-weight: 700; }
+    .subtitle { font-family: 'Inter', sans-serif; font-size: 12px; fill: #8b949e; }
+    .text-val { font-family: 'Fira Code', 'Courier New', monospace; font-size: 11px; fill: #e1e4e8; }
+    .text-math { font-family: 'Georgia', serif; font-size: 13px; fill: #a1b0cb; font-style: italic; }
+    .text-bold { font-weight: bold; fill: #ffffff; }
+    .rail { stroke: #30363d; stroke-width: 6; stroke-linecap: round; }
+    .dimension-line { stroke: #8b949e; stroke-width: 1; stroke-dasharray: 2 2; }
+    .reward-box { fill: #10b981; fill-opacity: 0.15; stroke: #10b981; stroke-width: 1.5; }
+  </style>
+
+  <!-- Background -->
+  <rect width="800" height="500" rx="12" fill="url(#bgGrad)" />
+  
+  <text x="35" y="45" class="title">Scenario: Cart-Pole RL Agent Setup</text>
+  <text x="35" y="65" class="subtitle">Variables mapping &amp; Reinforcement Learning loop (PyTorch DQN integration)</text>
+
+  <!-- ==================== LEFT SIDE: PHYSICAL DIAGRAM ==================== -->
+  
+  <!-- Ground Track / Rail -->
+  <line x1="60" y1="320" x2="390" y2="320" class="rail" />
+  <!-- Hash marks on ground -->
+  <path d="M 60,320 L 50,330 M 100,320 L 90,330 M 140,320 L 130,330 M 190,320 L 180,330 M 240,320 L 230,330 M 290,320 L 280,330 M 340,320 L 330,330 M 390,320 L 380,330" stroke="#30363d" stroke-width="2" />
+  
+  <!-- Axis Center Reference -->
+  <line x1="225" y1="100" x2="225" y2="360" class="dimension-line" />
+  <text x="235" y="115" class="text-math">x = 0</text>
+
+  <!-- Cart Position Dimension Line -->
+  <line x1="225" y1="350" x2="260" y2="350" stroke="#58a6ff" stroke-width="1.5" />
+  <polygon points="260,350 252,346 252,354" fill="#58a6ff" />
+  <polygon points="225,350 233,346 233,354" fill="#58a6ff" />
+  <text x="245" y="370" class="text-math" fill="#58a6ff" text-anchor="middle">Position (x)</text>
+
+  <!-- Cart -->
+  <rect x="200" y="270" width="120" height="50" rx="6" fill="url(#cartGrad)" stroke="#58a6ff" stroke-width="2" />
+  <text x="260" y="300" class="text-math text-bold" fill="#0f111a">Cart (mc)</text>
+  
+  <!-- Cart Wheels -->
+  <circle cx="225" cy="320" r="12" fill="#30363d" stroke="#58a6ff" stroke-width="1.5" />
+  <circle cx="295" cy="320" r="12" fill="#30363d" stroke="#58a6ff" stroke-width="1.5" />
+  
+  <!-- Pole Pivot -->
+  <circle cx="260" cy="270" r="6" fill="#ff7b72" />
+  <text x="280" y="275" class="text-math">Pivot</text>
+  
+  <!-- Pole Angle Line (vertical reference) -->
+  <line x1="260" y1="270" x2="260" y2="130" class="dimension-line" />
+  <!-- Arc for theta -->
+  <path d="M 260,210 A 60,60 0 0,1 280,214" fill="none" stroke="#ff7b72" stroke-width="1.5" />
+  <text x="272" y="195" class="text-math" fill="#ff7b72">θ (Angle)</text>
+
+  <!-- Pole Rod -->
+  <!-- Calculated coordinate for end of pole: x = 260 + 130 * sin(18deg) ~ 260 + 40 = 300, y = 270 - 130 * cos(18deg) ~ 270 - 124 = 146 -->
+  <line x1="260" y1="270" x2="300" y2="146" stroke="#ff7b72" stroke-width="4.5" stroke-linecap="round" />
+  <text x="290" y="220" class="text-math text-bold">Length (2l)</text>
+
+  <!-- Pole Tip / Bob -->
+  <circle cx="300" cy="146" r="10" fill="url(#poleTipGrad)" filter="url(#glow)" />
+  <text x="320" y="145" class="text-math text-bold" fill="#fcb69f">Mass (mp)</text>
+
+  <!-- Action Force arrows -->
+  <!-- Action 1 (Push Right) -->
+  <path d="M 120,295 L 180,295" fill="none" stroke="#10b981" stroke-width="3.5" marker-end="url(#green-arrow)" />
+  <text x="140" y="285" class="text-val" fill="#10b981">Action 1: +Force</text>
+  
+  <!-- Action 0 (Push Left) -->
+  <path d="M 400,295 L 340,295" fill="none" stroke="#d73a49" stroke-width="3.5" marker-end="url(#red-arrow)" />
+  <text x="380" y="285" class="text-val" fill="#d73a49">Action 0: -Force</text>
+
+  <defs>
+    <marker id="green-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#10b981" />
+    </marker>
+    <marker id="red-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#d73a49" />
+    </marker>
+  </defs>
+
+  <!-- Velocity Indicators -->
+  <path d="M 270,305 L 300,305" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#gray-arrow)" />
+  <text x="290" y="318" class="text-math">x_dot</text>
+  
+  <path d="M 305,130 Q 325,140 330,160" fill="none" stroke="#8b949e" stroke-width="1.5" marker-end="url(#gray-arrow)" />
+  <text x="335" y="138" class="text-math">θ_dot</text>
+
+  <defs>
+    <marker id="gray-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M 0 2 L 8 5 L 0 8 z" fill="#8b949e" />
+    </marker>
+  </defs>
+
+  <!-- ==================== RIGHT SIDE: RL AGENT LOOP ==================== -->
+  
+  <rect x="440" y="90" width="325" height="370" rx="10" fill="#121420" stroke="#30363d" stroke-width="1.5" />
+  <text x="460" y="125" class="text-val text-bold" fill="#a1c4fd">REINFORCEMENT LEARNING LOOP</text>
+
+  <!-- Agent Box -->
+  <rect x="520" y="160" width="160" height="70" rx="8" fill="#1e2235" stroke="#58a6ff" stroke-width="1.5" />
+  <text x="600" y="190" class="label">DQN Policy Network</text>
+  <text x="600" y="210" class="desc" fill="#8b949e">PyTorch FeedForward</text>
+
+  <!-- Loop Paths -->
+  <!-- State path (Sim -> Agent) -->
+  <path d="M 360,180 L 520,180" fill="none" stroke="#ff7b72" stroke-width="2" />
+  <polygon points="518,180 510,175 510,185" fill="#ff7b72" />
+  <text x="440" y="170" class="arrow-text" fill="#ff7b72">State vector [s]</text>
+
+  <!-- Action path (Agent -> Sim) -->
+  <path d="M 600,230 L 600,265 L 420,265 L 420,280" fill="none" stroke="#58a6ff" stroke-width="2" />
+  <polygon points="420,278 415,270 425,270" fill="#58a6ff" />
+  <text x="500" y="255" class="arrow-text" fill="#58a6ff">Action a ∈ {0, 1}</text>
+
+  <!-- State / Observation Info inside Box -->
+  <rect x="460" y="295" width="285" height="75" rx="6" fill="#171926" stroke="#30363d" />
+  <text x="475" y="315" class="text-val" fill="#ff7b72">Observation Space Schema [4 floats]</text>
+  <text x="475" y="335" class="text-val" font-size="10px">s[0] (x): Pos  |  s[1] (x_dot): Vel</text>
+  <text x="475" y="353" class="text-val" font-size="10px">s[2] (θ): Angle|  s[3] (θ_dot): AngVel</text>
+
+  <!-- Reward Info -->
+  <rect x="460" y="385" width="285" height="60" rx="6" class="reward-box" />
+  <text x="475" y="405" class="text-val text-bold" fill="#10b981">Reward Function</text>
+  <text x="475" y="425" class="text-val" font-size="10px" fill="#a7f3d0">R = +1.0 if |θ| &lt; 12° &amp; |x| &lt; 2.4m, else 0</text>
+</svg>

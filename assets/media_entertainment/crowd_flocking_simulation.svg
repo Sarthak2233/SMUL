@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#1c1f2e" />
+      <stop offset="100%" stop-color="#0b0d16" />
+    </radialGradient>
+    
+    <!-- Glow filters for flocking centers -->
+    <filter id="flockGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-family: 'Outfit', 'Inter', sans-serif; font-size: 20px; fill: #ffffff; font-weight: 700; }
+    .subtitle { font-family: 'Inter', sans-serif; font-size: 12px; fill: #8b949e; }
+    .text-val { font-family: 'Fira Code', 'Courier New', monospace; font-size: 11px; fill: #e1e4e8; }
+    .text-math { font-family: 'Georgia', serif; font-size: 13px; fill: #cbd5e1; font-style: italic; }
+    .text-bold { font-weight: bold; }
+    .grid-line { stroke: #334155; stroke-dasharray: 4 4; stroke-width: 0.5; }
+    .boid { fill: #38bdf8; stroke: #0284c7; stroke-width: 1; }
+    .neighbor-radius { fill: none; stroke: #a855f7; stroke-dasharray: 2 2; stroke-width: 1.5; }
+    .force-vector { stroke: #fbbf24; stroke-width: 2; fill: none; }
+  </style>
+
+  <!-- Background -->
+  <rect width="800" height="500" rx="12" fill="url(#bgGrad)" />
+  
+  <text x="35" y="45" class="title">Scenario: CGI Crowd Flocking (Boids Model)</text>
+  <text x="35" y="65" class="subtitle">Autonomous steering agents with alignment, cohesion, and separation logic (CGI animation framework)</text>
+
+  <!-- Flocking Simulation Viewport (Left/Center) -->
+  <rect x="50" y="100" width="400" height="260" rx="6" fill="#0d1117" stroke="#334155" />
+  
+  <!-- Camera Grid Frame -->
+  <line x1="50" y1="230" x2="450" y2="230" stroke="#21262d" stroke-width="1" />
+  <line x1="250" y1="100" x2="250" y2="360" stroke="#21262d" stroke-width="1" />
+
+  <!-- Boids (Triangles pointing in velocity direction) -->
+  <!-- Target Boid (focused with vectors) -->
+  <g transform="translate(230, 210) rotate(-45)">
+    <polygon points="0,-12 -6,6 6,6" class="boid" fill="#ec4899" stroke="#be123c" filter="url(#flockGlow)" />
+  </g>
+  <!-- Neighbors -->
+  <g transform="translate(180, 180) rotate(-30)"><polygon points="0,-10 -5,5 5,5" class="boid" /></g>
+  <g transform="translate(200, 260) rotate(-60)"><polygon points="0,-10 -5,5 5,5" class="boid" /></g>
+  <g transform="translate(280, 190) rotate(-15)"><polygon points="0,-10 -5,5 5,5" class="boid" /></g>
+  <g transform="translate(270, 240) rotate(-50)"><polygon points="0,-10 -5,5 5,5" class="boid" /></g>
+
+  <!-- Neighborhood Radius around Target Boid (purple circle) -->
+  <circle cx="230" cy="210" r="75" class="neighbor-radius" />
+  <text x="210" y="125" class="text-val" fill="#a855f7">Perception Radius</text>
+
+  <!-- Force Vectors for Target Boid -->
+  <!-- Cohesion (towards center of mass) -->
+  <line x1="230" y1="210" x2="250" y2="225" class="force-vector" stroke="#10b981" marker-end="url(#vectorArrowGreen)" />
+  <text x="255" y="240" class="text-val" fill="#10b981">Cohesion</text>
+
+  <!-- Separation (away from close neighbors) -->
+  <line x1="230" y1="210" x2="195" y2="190" class="force-vector" stroke="#f43f5e" marker-end="url(#vectorArrowRed)" />
+  <text x="150" y="180" class="text-val" fill="#f43f5e">Separation</text>
+
+  <!-- Alignment (match velocity) -->
+  <line x1="230" y1="210" x2="270" y2="175" class="force-vector" stroke="#38bdf8" marker-end="url(#vectorArrowBlue)" />
+  <text x="275" y="165" class="text-val" fill="#38bdf8">Alignment</text>
+
+  <!-- Vector Markers -->
+  <defs>
+    <marker id="vectorArrowGreen" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4" markerHeight="4" orient="auto">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#10b981" />
+    </marker>
+    <marker id="vectorArrowRed" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4" markerHeight="4" orient="auto">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#f43f5e" />
+    </marker>
+    <marker id="vectorArrowBlue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4" markerHeight="4" orient="auto">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#38bdf8" />
+    </marker>
+  </defs>
+
+  <!-- Flow Chart (Right) -->
+  <rect x="490" y="100" width="280" height="230" rx="8" fill="#0d1117" stroke="#334155" />
+  <line x1="510" y1="300" x2="750" y2="300" stroke="#8b949e" stroke-width="1.5" />
+  <line x1="510" y1="130" x2="510" y2="300" stroke="#8b949e" stroke-width="1.5" />
+  <line x1="510" y1="130" x2="750" y2="130" class="grid-line" />
+  <line x1="510" y1="215" x2="750" y2="215" class="grid-line" />
+
+  <!-- Order / Cohesion index graph showing convergence -->
+  <path d="M 510,290 C 550,290 580,180 620,150 L 750,145" fill="none" stroke="#a855f7" stroke-width="2.5" />
+  <circle cx="620" cy="150" r="4" fill="#a855f7" />
+
+  <text x="525" y="125" class="text-val" fill="#a855f7">FLOCK COHESION INDEX</text>
+  <text x="635" y="170" class="text-val" fill="#10b981">Polarized alignment</text>
+
+  <!-- Mathematics Panel (Bottom Right) -->
+  <rect x="490" y="345" width="280" height="110" rx="8" fill="#1e293b" stroke="#334155" />
+  <text x="505" y="370" class="text-val text-bold" fill="#ffffff">STEERING FORCE EQUATION</text>
+  <text x="505" y="390" class="text-math">F_net = w_s F_sep + w_a F_align + w_c F_cohesion</text>
+  <text x="505" y="415" class="text-val">Boid count: <tspan fill="#38bdf8">150 agents</tspan></text>
+  <text x="505" y="435" class="text-val">System state: <tspan fill="#10b981">CONVERGED COHERENT</tspan></text>
+</svg>

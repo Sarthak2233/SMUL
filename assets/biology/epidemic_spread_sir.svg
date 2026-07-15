@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#1c1f2e" />
+      <stop offset="100%" stop-color="#0b0d16" />
+    </radialGradient>
+    
+    <!-- Node Glow Filters -->
+    <filter id="infectGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-family: 'Outfit', 'Inter', sans-serif; font-size: 20px; fill: #ffffff; font-weight: 700; }
+    .subtitle { font-family: 'Inter', sans-serif; font-size: 12px; fill: #8b949e; }
+    .text-val { font-family: 'Fira Code', 'Courier New', monospace; font-size: 11px; fill: #e1e4e8; }
+    .text-math { font-family: 'Georgia', serif; font-size: 13px; fill: #cbd5e1; font-style: italic; }
+    .text-bold { font-weight: bold; }
+    .grid-line { stroke: #334155; stroke-dasharray: 4 4; stroke-width: 0.5; }
+    .network-link { fill: none; stroke: #334155; stroke-width: 1.5; }
+    .active-infection-link { fill: none; stroke: #f43f5e; stroke-width: 2; stroke-dasharray: 4 2; }
+    .susceptible { fill: #38bdf8; stroke: #0284c7; stroke-width: 1.5; }
+    .infected { fill: #f43f5e; stroke: #be123c; stroke-width: 2; }
+    .recovered { fill: #10b981; stroke: #047857; stroke-width: 1.5; }
+  </style>
+
+  <!-- Background -->
+  <rect width="800" height="500" rx="12" fill="url(#bgGrad)" />
+  
+  <text x="35" y="45" class="title">Scenario: Epidemic Spread (SIR Network)</text>
+  <text x="35" y="65" class="subtitle">Disease transmission dynamics on social contact topology (Markov chain Monte Carlo simulator)</text>
+
+  <!-- Network Graph (Left Side) -->
+  <!-- Links -->
+  <line x1="120" y1="180" x2="220" y2="150" class="network-link" />
+  <line x1="120" y1="180" x2="160" y2="270" class="network-link" />
+  <line x1="220" y1="150" x2="300" y2="200" class="network-link" />
+  <line x1="160" y1="270" x2="300" y2="200" class="network-link" />
+  
+  <!-- Active infection paths -->
+  <line x1="220" y1="280" x2="160" y2="270" class="active-infection-link" />
+  <line x1="220" y1="280" x2="300" y2="200" class="active-infection-link" />
+  <line x1="220" y1="280" x2="220" y2="380" class="network-link" />
+  <line x1="300" y1="320" x2="300" y2="200" class="network-link" />
+  <line x1="300" y1="320" x2="220" y2="380" class="network-link" />
+  <line x1="120" y1="350" x2="160" y2="270" class="network-link" />
+  <line x1="120" y1="350" x2="220" y2="380" class="network-link" />
+
+  <!-- Nodes -->
+  <!-- Susceptible (Blue) -->
+  <circle cx="120" cy="180" r="10" class="susceptible" />
+  <circle cx="300" cy="200" r="10" class="susceptible" />
+  <circle cx="220" cy="380" r="10" class="susceptible" />
+  <circle cx="120" cy="350" r="10" class="susceptible" />
+
+  <!-- Infected (Red/Rose with glow) -->
+  <circle cx="220" cy="280" r="12" class="infected" filter="url(#infectGlow)" />
+  <circle cx="160" cy="270" r="12" class="infected" filter="url(#infectGlow)" />
+
+  <!-- Recovered (Green) -->
+  <circle cx="220" cy="150" r="10" class="recovered" />
+  <circle cx="300" cy="320" r="10" class="recovered" />
+
+  <!-- Legend -->
+  <circle cx="80" cy="430" r="7" class="susceptible" />
+  <text x="95" y="434" class="text-val">Susceptible (S)</text>
+  <circle cx="205" cy="430" r="7" class="infected" />
+  <text x="220" y="434" class="text-val">Infected (I)</text>
+  <circle cx="310" cy="430" r="7" class="recovered" />
+  <text x="325" y="434" class="text-val">Recovered (R)</text>
+
+  <!-- Timeline Curves Chart (Right) -->
+  <rect x="490" y="100" width="280" height="230" rx="8" fill="#0d1117" stroke="#334155" />
+  <line x1="510" y1="300" x2="750" y2="300" stroke="#8b949e" stroke-width="1.5" />
+  <line x1="510" y1="130" x2="510" y2="300" stroke="#8b949e" stroke-width="1.5" />
+  <line x1="510" y1="130" x2="750" y2="130" class="grid-line" />
+  <line x1="510" y1="215" x2="750" y2="215" class="grid-line" />
+
+  <!-- SIR curves S (blue), I (red), R (green) -->
+  <path d="M 510,140 C 550,150 580,270 750,295" fill="none" stroke="#38bdf8" stroke-width="2.5" />
+  <path d="M 510,300 C 540,290 570,160 600,180 C 630,200 680,285 750,298" fill="none" stroke="#f43f5e" stroke-width="2.5" />
+  <path d="M 510,300 C 580,295 620,160 750,145" fill="none" stroke="#10b981" stroke-width="2.5" />
+
+  <text x="525" y="125" class="text-val" fill="#38bdf8">POPULATION DYNAMICS</text>
+
+  <!-- Mathematics Panel (Bottom Right) -->
+  <rect x="490" y="345" width="280" height="110" rx="8" fill="#1e293b" stroke="#334155" />
+  <text x="505" y="370" class="text-val text-bold" fill="#ffffff">SIR MODEL EQUATIONS</text>
+  <text x="505" y="390" class="text-math">dS/dt = -βSI,  dI/dt = βSI - γI,  dR/dt = γI</text>
+  <text x="505" y="415" class="text-val">Reproduction number (R₀): <tspan fill="#f43f5e">2.48</tspan></text>
+  <text x="505" y="435" class="text-val">Infection state: <tspan fill="#f59e0b">DECAYING OUTBREAK</tspan></text>
+</svg>

@@ -1,0 +1,371 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 700" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#141829" />
+      <stop offset="100%" stop-color="#070911" />
+    </radialGradient>
+    
+    <!-- AWS Box Color gradients -->
+    <linearGradient id="clientGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ec4899" />
+      <stop offset="100%" stop-color="#be185d" />
+    </linearGradient>
+    <linearGradient id="gwGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7" />
+      <stop offset="100%" stop-color="#7e22ce" />
+    </linearGradient>
+    <linearGradient id="lambdaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f97316" />
+      <stop offset="100%" stop-color="#ea580c" />
+    </linearGradient>
+    <linearGradient id="fargateGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+    <linearGradient id="dbGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#047857" />
+    </linearGradient>
+    <linearGradient id="sqsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#64748b" />
+      <stop offset="100%" stop-color="#475569" />
+    </linearGradient>
+
+    <!-- Glowing filter -->
+    <filter id="fargateGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-family: 'Outfit', 'Inter', sans-serif; font-size: 24px; fill: #ffffff; font-weight: 700; letter-spacing: 0.5px; }
+    .subtitle { font-family: 'Inter', sans-serif; font-size: 13px; fill: #8b949e; }
+    .group-label { font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: bold; fill: #8b949e; letter-spacing: 1px; }
+    .label { font-family: 'Inter', sans-serif; font-size: 12px; fill: #ffffff; font-weight: 600; text-anchor: middle; }
+    .desc { font-family: 'Inter', sans-serif; font-size: 10px; fill: #e1e4e8; text-anchor: middle; }
+    .arrow-text { font-family: 'Fira Code', monospace; font-size: 9px; fill: #8b949e; text-anchor: middle; }
+    .connection-line { fill: none; stroke-width: 2; stroke-linecap: round; }
+  </style>
+
+  <!-- Background -->
+  <rect width="1100" height="700" rx="16" fill="url(#bgGrad)" />
+
+  <g opacity="0.04">
+    <path d="M 0,50 L 1100,50 M 0,100 L 1100,100 M 0,150 L 1100,150 M 0,200 L 1100,200 M 0,250 L 1100,250 M 0,300 L 1100,300 M 0,350 L 1100,350 M 0,400 L 1100,400 M 0,450 L 1100,450 M 0,500 L 1100,500 M 0,550 L 1100,550 M 0,600 L 1100,600 M 0,650 L 1100,650" stroke="#ffffff" />
+    <path d="M 100,0 L 100,700 M 200,0 L 200,700 M 300,0 L 300,700 M 400,0 L 400,700 M 500,0 L 500,700 M 600,0 L 600,700 M 700,0 L 700,700 M 800,0 L 800,700 M 900,0 L 900,700 M 1000,0 L 1000,700" stroke="#ffffff" />
+  </g>
+
+  <!-- Title -->
+  <text x="40" y="50" class="title">SMUL GPSE — AWS Serverless Cloud Infrastructure</text>
+  <text x="40" y="72" class="subtitle">Complete technical blueprint of the microservices orchestration architecture</text>
+
+  <!-- ==================== GROUP REGIONS ==================== -->
+  
+  <!-- Boundary: Ingress Gateway -->
+  <rect x="230" y="100" width="180" height="540" rx="10" fill="none" stroke="#a855f7" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.4" />
+  <text x="320" y="125" class="group-label" text-anchor="middle">INGRESS GATEWAYS</text>
+
+  <!-- Boundary: Lambda Compute (Control Plane) -->
+  <rect x="450" y="100" width="220" height="540" rx="10" fill="none" stroke="#f97316" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.4" />
+  <text x="560" y="125" class="group-label" text-anchor="middle">LAMBDA CORE (CONTROL)</text>
+
+  <!-- Boundary: SQS & Caching -->
+  <rect x="710" y="100" width="160" height="540" rx="10" fill="none" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.4" />
+  <text x="790" y="125" class="group-label" text-anchor="middle">EVENT BUS &amp; CACHE</text>
+
+  <!-- Boundary: Fargate Compute (Data Plane) -->
+  <rect x="910" y="100" width="160" height="540" rx="10" fill="none" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.4" />
+  <text x="990" y="125" class="group-label" text-anchor="middle">FARGATE (DATA PLANE)</text>
+
+  <!-- ==================== CLIENT LAYER ==================== -->
+  <g transform="translate(40, 160)">
+    <rect width="140" height="60" rx="8" fill="url(#clientGrad)" />
+    <text x="70" y="27" class="label">S3 + CloudFront</text>
+    <text x="70" y="45" class="desc">Static React App</text>
+  </g>
+  
+  <g transform="translate(40, 280)">
+    <rect width="140" height="60" rx="8" fill="url(#clientGrad)" />
+    <text x="70" y="27" class="label">Client Browser</text>
+    <text x="70" y="45" class="desc">Webpage Session</text>
+  </g>
+  
+  <g transform="translate(40, 420)">
+    <rect width="140" height="60" rx="8" fill="url(#clientGrad)" />
+    <text x="70" y="27" class="label">MediaPipe JS</text>
+    <text x="70" y="45" class="desc">Client Gesture Capture</text>
+  </g>
+
+  <!-- ==================== INGRESS GATEWAYS ==================== -->
+  <g transform="translate(250, 160)">
+    <rect width="140" height="60" rx="8" fill="url(#gwGrad)" />
+    <text x="70" y="27" class="label">API GW (REST)</text>
+    <text x="70" y="45" class="desc">HTTPS Endpoints</text>
+  </g>
+
+  <g transform="translate(250, 280)">
+    <rect width="140" height="60" rx="8" fill="url(#gwGrad)" />
+    <text x="70" y="27" class="label">API GW (WebSockets)</text>
+    <text x="70" y="45" class="desc">WSS Frame Routing</text>
+  </g>
+
+  <!-- ==================== LAMBDA HANDLERS ==================== -->
+  <!-- Auth Lambda -->
+  <g transform="translate(490, 150)">
+    <rect width="140" height="50" rx="6" fill="url(#lambdaGrad)" />
+    <text x="70" y="22" class="label">auth.py</text>
+    <text x="70" y="38" class="desc">Cognito Authorization</text>
+  </g>
+  <!-- Projects Lambda -->
+  <g transform="translate(490, 220)">
+    <rect width="140" height="50" rx="6" fill="url(#lambdaGrad)" />
+    <text x="70" y="22" class="label">projects.py</text>
+    <text x="70" y="38" class="desc">Project CRUD APIs</text>
+  </g>
+  <!-- Simulation Orchestrator -->
+  <g transform="translate(490, 290)">
+    <rect width="140" height="50" rx="6" fill="url(#lambdaGrad)" />
+    <text x="70" y="22" class="label">simulation_start.py</text>
+    <text x="70" y="38" class="desc">Triggers Fargate RunTask</text>
+  </g>
+  <!-- LLM Parse Lambda -->
+  <g transform="translate(490, 360)">
+    <rect width="140" height="50" rx="6" fill="url(#lambdaGrad)" />
+    <text x="70" y="22" class="label">llm_parse.py</text>
+    <text x="70" y="38" class="desc">NLP to JSON / AST Lint</text>
+  </g>
+  <!-- WS Connect Lambda -->
+  <g transform="translate(490, 430)">
+    <rect width="140" height="50" rx="6" fill="url(#lambdaGrad)" />
+    <text x="70" y="22" class="label">websocket_connect.py</text>
+    <text x="70" y="38" class="desc">Saves connection ID</text>
+  </g>
+  <!-- WS Send/Command Lambda -->
+  <g transform="translate(490, 500)">
+    <rect width="140" height="50" rx="6" fill="url(#lambdaGrad)" />
+    <text x="70" y="22" class="label">websocket_send.py</text>
+    <text x="70" y="38" class="desc">Receives gestures -> SQS</text>
+  </g>
+
+  <!-- ==================== STORAGE & EVENT BUS ==================== -->
+  <!-- SQS Queue -->
+  <g transform="translate(720, 210)">
+    <rect width="140" height="60" rx="8" fill="url(#sqsGrad)" />
+    <text x="70" y="27" class="label">SQS FIFO Queue</text>
+    <text x="70" y="45" class="desc">Control messages</text>
+  </g>
+  <!-- Redis Cache -->
+  <g transform="translate(720, 310)">
+    <rect width="140" height="60" rx="8" fill="url(#dbGrad)" />
+    <text x="70" y="27" class="label">ElastiCache Redis</text>
+    <text x="70" y="45" class="desc">Live States &amp; Locks</text>
+  </g>
+  <!-- DynamoDB Tables -->
+  <g transform="translate(720, 410)">
+    <rect width="140" height="60" rx="8" fill="url(#dbGrad)" />
+    <text x="70" y="27" class="label">DynamoDB</text>
+    <text x="70" y="45" class="desc">Persistent metadata</text>
+  </g>
+  <!-- S3 Storage -->
+  <g transform="translate(720, 510)">
+    <rect width="140" height="60" rx="8" fill="url(#dbGrad)" />
+    <text x="70" y="27" class="label">Amazon S3</text>
+    <text x="70" y="45" class="desc">Snapshots &amp; weights</text>
+  </g>
+
+  <!-- ==================== FARGATE CONTAINERS ==================== -->
+  <!-- Physics engine container -->
+  <g transform="translate(920, 240)">
+    <rect width="140" height="80" rx="10" fill="url(#fargateGrad)" filter="url(#fargateGlow)" />
+    <text x="70" y="32" class="label">Simulation Engine</text>
+    <text x="70" y="50" class="desc">PyBullet / SciPy</text>
+    <text x="70" y="66" class="desc" fill="#84fab0" font-weight="bold">Continuous Loop</text>
+  </g>
+  
+  <!-- Training spot container -->
+  <g transform="translate(920, 390)">
+    <rect width="140" height="80" rx="10" fill="url(#fargateGrad)" />
+    <text x="70" y="32" class="label">ML Agent Trainer</text>
+    <text x="70" y="50" class="desc">PyTorch DQN / PPO</text>
+    <text x="70" y="66" class="desc" fill="#8b949e">Fargate Spot Task</text>
+  </g>
+
+  <!-- ==================== CONNECTIONS ==================== -->
+  
+  <!-- Client to Gateways -->
+  <path d="M 180,310 L 250,310" class="connection-line" stroke="#ec4899" />
+  <polygon points="248,310 240,305 240,315" fill="#ec4899" />
+  <text x="215" y="300" class="arrow-text">WS</text>
+  
+  <path d="M 180,210 L 210,210 L 210,190 L 250,190" class="connection-line" stroke="#ec4899" />
+  <polygon points="248,190 240,185 240,195" fill="#ec4899" />
+  <text x="215" y="180" class="arrow-text">HTTPS</text>
+  
+  <path d="M 180,450 L 210,450 L 210,320 L 250,320" class="connection-line" stroke="#ec4899" stroke-dasharray="3 3" />
+  
+  <!-- Gateway to Lambdas -->
+  <!-- REST GW to Lambdas -->
+  <path d="M 390,190 L 440,190 L 440,240 L 490,240" class="connection-line" stroke="#a855f7" />
+  <path d="M 390,190 L 490,190" class="connection-line" stroke="#a855f7" />
+  <path d="M 390,190 L 440,190 L 440,315 L 490,315" class="connection-line" stroke="#a855f7" />
+  
+  <!-- WS GW to Lambdas -->
+  <path d="M 390,310 L 470,310 L 470,455 L 490,455" class="connection-line" stroke="#a855f7" />
+  <path d="M 390,310 L 470,310 L 470,525 L 490,525" class="connection-line" stroke="#a855f7" />
+  
+  <!-- Lambda to DB / Storage -->
+  <!-- Auth Lambda -> DynamoDB -->
+  <path d="M 630,175 L 690,175 L 690,425 L 720,425" class="connection-line" stroke="#ea580c" />
+  <polygon points="718,425 710,420 710,430" fill="#ea580c" />
+  
+  <!-- Sim Start Lambda -> SQS / Fargate -->
+  <path d="M 630,315 L 720,240" class="connection-line" stroke="#ea580c" />
+  <polygon points="718,240 710,237 713,245" fill="#ea580c" />
+  <text x="670" y="270" class="arrow-text" transform="rotate(-30, 670, 270)">Enqueue Config</text>
+  
+  <!-- Sim Start Lambda -> Fargate API (RunTask) -->
+  <path d="M 560,340 L 560,600 L 990,600 L 990,320" class="connection-line" stroke="#ea580c" stroke-dasharray="3 3" />
+  <polygon points="990,322 985,330 995,330" fill="#ea580c" />
+  <text x="750" y="590" class="arrow-text">ECS RunTask Event</text>
+
+  <!-- Fargate Engine reads from SQS -->
+  <path d="M 790,210 L 790,190 L 940,190 L 940,240" class="connection-line" stroke="#3b82f6" />
+  <polygon points="940,238 935,230 945,230" fill="#3b82f6" />
+  
+  <!-- Fargate Engine state sync with Redis -->
+  <path d="M 920,280 L 860,280 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" />
+  <path d="M 860,340 L 860,340 L 860,340" class="connection-line" stroke="#3b82f6" stroke-dasharray="3 3" />
+  <polygon points="860,312 855,320 865,320" fill="#3b82f6" />
+  <text x="890" y="325" class="arrow-text">Redis state I/O</text>
+
+  <!-- Fargate Trainer to S3 -->
+  <path d="M 990,470 L 990,540 L 860,540" class="connection-line" stroke="#3b82f6" />
+  <polygon points="862,540 870,535 870,545" fill="#3b82f6" />
+  <text x="925" y="530" class="arrow-text">Upload weights</text>
+</svg>

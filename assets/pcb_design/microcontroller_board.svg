@@ -1,0 +1,209 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#121620" />
+      <stop offset="100%" stop-color="#07090e" />
+    </radialGradient>
+
+    <!-- PCB Board Gradient (Matte Green/Dark-Teal FR4) -->
+    <linearGradient id="pcbGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a2a1a" />
+      <stop offset="100%" stop-color="#03100a" />
+    </linearGradient>
+
+    <!-- Gold Plating Gradient for Pads -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#b45309" />
+    </linearGradient>
+
+    <!-- Signal Glow Filter -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-family: 'Outfit', 'Inter', sans-serif; font-size: 20px; fill: #ffffff; font-weight: 700; }
+    .subtitle { font-family: 'Inter', sans-serif; font-size: 12px; fill: #8b949e; }
+    .text-val { font-family: 'Fira Code', 'Courier New', monospace; font-size: 11px; fill: #cbd5e1; }
+    .text-math { font-family: 'Georgia', serif; font-size: 13px; fill: #cbd5e1; font-style: italic; }
+    .text-bold { font-weight: bold; }
+    
+    /* PCB Styles */
+    .pcb-substrate { fill: url(#pcbGrad); stroke: #047857; stroke-width: 1.5; filter: drop-shadow(0px 4px 15px rgba(0, 0, 0, 0.5)); }
+    .pcb-copper-trace { fill: none; stroke: #059669; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; opacity: 0.7; }
+    .pcb-copper-ground-plane { fill: #064e3b; opacity: 0.15; }
+    .pcb-gold-pad { fill: url(#goldGrad); }
+    .pcb-via-hole { fill: #07090e; }
+    
+    /* Components */
+    .component-body { fill: #1e293b; stroke: #475569; stroke-width: 1.5; }
+    .mcu-body { fill: #0f172a; stroke: #334155; stroke-width: 2; }
+    .pin-metal { fill: #e2e8f0; }
+    
+    /* High-Speed Signal Styling */
+    .signal-trace { fill: none; stroke: #f43f5e; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; filter: url(#glow); }
+    .signal-trace-matched { fill: none; stroke: #38bdf8; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; filter: url(#glow); }
+    
+    /* Simulation Panel */
+    .grid-line { stroke: #334155; stroke-dasharray: 4 4; stroke-width: 0.5; }
+    .plot-line-mismatched { fill: none; stroke: #f43f5e; stroke-width: 2.5; stroke-linecap: round; }
+    .plot-line-matched { fill: none; stroke: #38bdf8; stroke-width: 2; stroke-linecap: round; }
+  </style>
+
+  <!-- Background -->
+  <rect width="800" height="500" rx="12" fill="url(#bgGrad)" />
+  
+  <text x="35" y="45" class="title">Scenario: High-Speed PCB Trace Signal Integrity</text>
+  <text x="35" y="65" class="subtitle">Microstrip transmission line impedance matching &amp; reflection simulation (Lumped Element model)</text>
+
+  <!-- LEFT: PCB Layout View -->
+  <g transform="translate(45, 100)">
+    <!-- PCB Substrate -->
+    <rect width="380" height="340" rx="10" class="pcb-substrate" />
+
+    <!-- Grid / Ground Plane Hatching (Simulated) -->
+    <pattern id="gridPattern" width="10" height="10" patternUnits="userSpaceOnUse">
+      <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#05533c" stroke-width="0.5" opacity="0.3" />
+    </pattern>
+    <rect width="380" height="340" rx="10" fill="url(#gridPattern)" />
+
+    <!-- Copper Ground Fills -->
+    <rect x="15" y="15" width="100" height="80" rx="4" class="pcb-copper-ground-plane" />
+    <rect x="260" y="240" width="100" height="80" rx="4" class="pcb-copper-ground-plane" />
+
+    <!-- Standard Copper Traces (Background Routing) -->
+    <path d="M 70,60 H 120 V 130 H 150" class="pcb-copper-trace" />
+    <path d="M 50,220 V 270 H 100 V 290" class="pcb-copper-trace" />
+    <path d="M 280,60 H 220 V 130 H 190" class="pcb-copper-trace" />
+    <path d="M 330,120 V 180 H 230" class="pcb-copper-trace" />
+    <path d="M 300,280 H 240 V 210 H 230" class="pcb-copper-trace" />
+
+    <!-- Decoupling Capacitors & Vias -->
+    <!-- Cap 1 -->
+    <rect x="105" y="115" width="16" height="26" rx="2" class="component-body" />
+    <rect x="105" y="115" width="16" height="6" fill="#cbd5e1" />
+    <rect x="105" y="135" width="16" height="6" fill="#cbd5e1" />
+    <path d="M 113,115 V 105" class="pcb-copper-trace" />
+    <circle cx="113" cy="105" r="4" class="pcb-gold-pad" />
+    <circle cx="113" cy="105" r="1.5" class="pcb-via-hole" />
+    <!-- Cap 2 -->
+    <rect x="255" y="115" width="16" height="26" rx="2" class="component-body" />
+    <rect x="255" y="115" width="16" height="6" fill="#cbd5e1" />
+    <rect x="255" y="135" width="16" height="6" fill="#cbd5e1" />
+    <path d="M 263,115 V 105" class="pcb-copper-trace" />
+    <circle cx="263" cy="105" r="4" class="pcb-gold-pad" />
+    <circle cx="263" cy="105" r="1.5" class="pcb-via-hole" />
+
+    <!-- MCU Package (QFN) -->
+    <g transform="translate(140, 120)">
+      <!-- Pins/Pads under MCU -->
+      <rect x="-10" y="5" width="15" height="4" class="pcb-gold-pad" />
+      <rect x="-10" y="20" width="15" height="4" class="pcb-gold-pad" />
+      <rect x="-10" y="35" width="15" height="4" class="pcb-gold-pad" />
+      <rect x="-10" y="50" width="15" height="4" class="pcb-gold-pad" />
+      <rect x="-10" y="65" width="15" height="4" class="pcb-gold-pad" />
+
+      <rect x="95" y="5" width="15" height="4" class="pcb-gold-pad" />
+      <rect x="95" y="20" width="15" height="4" class="pcb-gold-pad" />
+      <rect x="95" y="35" width="15" height="4" class="pcb-gold-pad" />
+      <rect x="95" y="50" width="15" height="4" class="pcb-gold-pad" stroke="#f43f5e" stroke-width="0.5" />
+      <rect x="95" y="65" width="15" height="4" class="pcb-gold-pad" stroke="#38bdf8" stroke-width="0.5" />
+
+      <rect x="15" y="-10" width="4" height="15" class="pcb-gold-pad" />
+      <rect x="35" y="-10" width="4" height="15" class="pcb-gold-pad" />
+      <rect x="55" y="-10" width="4" height="15" class="pcb-gold-pad" />
+      <rect x="75" y="-10" width="4" height="15" class="pcb-gold-pad" />
+
+      <rect x="15" y="75" width="4" height="15" class="pcb-gold-pad" />
+      <rect x="35" y="75" width="4" height="15" class="pcb-gold-pad" />
+      <rect x="55" y="75" width="4" height="15" class="pcb-gold-pad" />
+      <rect x="75" y="75" width="4" height="15" class="pcb-gold-pad" />
+
+      <!-- MCU Body -->
+      <rect x="0" y="0" width="100" height="80" rx="6" class="mcu-body" />
+      <circle cx="15" cy="15" r="3" fill="#475569" /> <!-- Pin 1 Indicator -->
+      <text x="50" y="45" font-family="'Inter', sans-serif" font-size="12px" fill="#64748b" text-anchor="middle" font-weight="bold">MCU</text>
+    </g>
+
+    <!-- Connectors (Right Side Edge Connector) -->
+    <g transform="translate(350, 130)">
+      <rect x="0" y="0" width="20" height="80" rx="3" class="component-body" />
+      <!-- Connector Pins -->
+      <rect x="-10" y="10" width="12" height="6" class="pcb-gold-pad" />
+      <rect x="-10" y="30" width="12" height="6" class="pcb-gold-pad" stroke="#f43f5e" stroke-width="0.5" />
+      <rect x="-10" y="50" width="12" height="6" class="pcb-gold-pad" stroke="#38bdf8" stroke-width="0.5" />
+      <rect x="-10" y="70" width="12" height="6" class="pcb-gold-pad" />
+      <text x="10" y="45" font-family="'Inter', sans-serif" font-size="9px" fill="#475569" text-anchor="middle" transform="rotate(90 10 45)">CON</text>
+    </g>
+
+    <!-- High-Speed Signal Traces (The Simulated Under-Test Lines) -->
+    <!-- 1. Mismatched Line (Ringing) - Rose/Red -->
+    <path d="M 245,170 Q 280,170 300,160 T 345,160" class="signal-trace" />
+    <circle cx="245" cy="170" r="2.5" fill="#f43f5e" />
+    <circle cx="345" cy="160" r="2.5" fill="#f43f5e" />
+
+    <!-- 2. Matched Line (Clean) - Light Blue -->
+    <path d="M 245,185 L 270,185 L 290,210 L 310,210 L 325,180 L 345,180" class="signal-trace-matched" />
+    <circle cx="245" cy="185" r="2.5" fill="#38bdf8" />
+    <circle cx="345" cy="180" r="2.5" fill="#38bdf8" />
+
+    <!-- Annotations on PCB -->
+    <text x="270" y="150" class="text-val" fill="#f43f5e" font-size="8px">Unmatched (Z_0 = 110 Ω)</text>
+    <text x="250" y="230" class="text-val" fill="#38bdf8" font-size="8px">Matched (Z_0 = 50 Ω)</text>
+  </g>
+
+  <!-- RIGHT: Simulation / Oscilloscope Display -->
+  <g transform="translate(480, 100)">
+    <!-- Display Screen -->
+    <rect x="0" y="0" width="285" height="220" rx="8" fill="#090d16" stroke="#1e293b" />
+    
+    <!-- Screen Grid -->
+    <line x1="0" y1="110" x2="285" y2="110" stroke="#1e293b" stroke-width="1.5" />
+    <line x1="142.5" y1="0" x2="142.5" y2="220" stroke="#1e293b" stroke-width="1.5" />
+    <line x1="0" y1="55" x2="285" y2="55" class="grid-line" />
+    <line x1="0" y1="165" x2="285" y2="165" class="grid-line" />
+    <line x1="71" y1="0" x2="71" y2="220" class="grid-line" />
+    <line x1="213" y1="0" x2="213" y2="220" class="grid-line" />
+
+    <!-- Clean Square Wave & Damped Ringing Curves -->
+    <!-- Ideal/Matched Signal (Cyan) -->
+    <path d="M 15,180 L 70,180 L 70,40 L 210,40 L 210,180 L 270,180" class="plot-line-matched" />
+
+    <!-- Mismatched Reflection Signal (Rose - Ringing and overshoot) -->
+    <path d="M 15,180 
+             L 70,180 
+             L 70,10 
+             Q 75,70 80,25 
+             T 90,50 T 100,38 T 110,41 T 120,40
+             L 210,40
+             L 210,210
+             Q 215,150 220,195
+             T 230,170 T 240,182 T 250,179 H 270" class="plot-line-mismatched" />
+
+    <!-- Plot Labels -->
+    <text x="15" y="25" class="text-val text-bold" fill="#38bdf8">CH1: Matched (50 Ω)</text>
+    <text x="15" y="42" class="text-val text-bold" fill="#f43f5e">CH2: Reflection (110 Ω)</text>
+  </g>
+
+  <!-- BOTTOM RIGHT: Mathematical Equations & Analysis Panel -->
+  <g transform="translate(480, 335)">
+    <!-- Panel Box -->
+    <rect x="0" y="0" width="285" height="105" rx="8" fill="#111827" stroke="#1e293b" />
+    
+    <text x="15" y="25" class="text-val text-bold" fill="#38bdf8">MICROSTRIP CHARACTERISTIC IMPEDANCE</text>
+    
+    <!-- Microstrip Equation (Rendered as text-math) -->
+    <text x="15" y="50" class="text-math" font-size="14px">Z_0 = [87 / √(ε_r + 1.41)] • ln[ 5.98h / (0.8w + t) ]</text>
+    
+    <!-- Parameter Metrics -->
+    <text x="15" y="75" class="text-val" font-size="10px">Height (h): 0.16 mm | Width (w): 0.32 mm</text>
+    <text x="15" y="90" class="text-val" font-size="10px">Trace Thick (t): 35 µm | Copper ε_r (FR4): 4.2</text>
+  </g>
+</svg>

@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#1c1f2e" />
+      <stop offset="100%" stop-color="#0b0d16" />
+    </radialGradient>
+    
+    <!-- Sensor Glow -->
+    <filter id="sensorGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-family: 'Outfit', 'Inter', sans-serif; font-size: 20px; fill: #ffffff; font-weight: 700; }
+    .subtitle { font-family: 'Inter', sans-serif; font-size: 12px; fill: #8b949e; }
+    .text-val { font-family: 'Fira Code', 'Courier New', monospace; font-size: 11px; fill: #e1e4e8; }
+    .text-math { font-family: 'Georgia', serif; font-size: 13px; fill: #cbd5e1; font-style: italic; }
+    .text-bold { font-weight: bold; }
+    .grid-line { stroke: #334155; stroke-dasharray: 4 4; stroke-width: 0.5; }
+    .conveyor { fill: none; stroke: #475569; stroke-width: 8; stroke-linecap: round; }
+    .conveyor-roller { fill: #1e293b; stroke: #64748b; stroke-width: 1.5; }
+    .robot-arm { fill: none; stroke: #38bdf8; stroke-width: 5; stroke-linecap: round; }
+    .part { fill: #f59e0b; stroke: #ea580c; stroke-width: 1; rx: 2; }
+    .sensor-ray { fill: none; stroke: #10b981; stroke-width: 1.5; stroke-dasharray: 2 2; }
+  </style>
+
+  <!-- Background -->
+  <rect width="800" height="500" rx="12" fill="url(#bgGrad)" />
+  
+  <text x="35" y="45" class="title">Scenario: Automated Assembly Line Optimization</text>
+  <text x="35" y="65" class="subtitle">Conveyor queue dynamics &amp; robotic pick-and-place cycle times (Discrete Event manufacturing simulator)</text>
+
+  <!-- Conveyor Belt 1 (Left to Right) -->
+  <line x1="50" y1="240" x2="420" y2="240" class="conveyor" />
+  <!-- Rollers -->
+  <circle cx="70" cy="240" r="5" class="conveyor-roller" />
+  <circle cx="140" cy="240" r="5" class="conveyor-roller" />
+  <circle cx="210" cy="240" r="5" class="conveyor-roller" />
+  <circle cx="280" cy="240" r="5" class="conveyor-roller" />
+  <circle cx="350" cy="240" r="5" class="conveyor-roller" />
+  <circle cx="410" cy="240" r="5" class="conveyor-roller" />
+
+  <!-- Parts on Conveyor -->
+  <rect x="80" y="222" width="20" height="12" class="part" />
+  <rect x="160" y="222" width="20" height="12" class="part" />
+  <rect x="300" y="222" width="20" height="12" class="part" />
+  <!-- Part being picked -->
+  <rect x="230" y="222" width="20" height="12" class="part" stroke="#f43f5e" fill="#f43f5e" />
+
+  <!-- Robotic Arm (Center) -->
+  <rect x="210" y="100" width="40" height="10" fill="#475569" rx="2" />
+  <!-- Arm Link 1 -->
+  <line x1="230" y1="105" x2="200" y2="160" class="robot-arm" />
+  <!-- Joint -->
+  <circle cx="200" cy="160" r="4" fill="#ffffff" />
+  <!-- Arm Link 2 -->
+  <line x1="200" y1="160" x2="240" y2="220" class="robot-arm" />
+  <!-- Claw -->
+  <path d="M 235,220 L 245,220 M 237,220 L 237,225 M 243,220 L 243,225" stroke="#38bdf8" stroke-width="2" />
+  <text x="145" y="130" class="text-val" fill="#38bdf8">Robotic Arm</text>
+
+  <!-- Photoelectric Sensor (Right) -->
+  <rect x="340" y="160" width="15" height="25" fill="#1e293b" stroke="#94a3b8" stroke-width="1.5" />
+  <!-- Glowing lens -->
+  <circle cx="347" cy="178" r="3" fill="#10b981" filter="url(#sensorGlow)" />
+  <line x1="347" y1="182" x2="347" y2="236" class="sensor-ray" />
+  <text x="365" y="175" class="text-val" fill="#10b981">QC Pass</text>
+
+  <!-- Flow Chart (Right) -->
+  <rect x="490" y="100" width="280" height="230" rx="8" fill="#0d1117" stroke="#334155" />
+  <line x1="510" y1="300" x2="750" y2="300" stroke="#8b949e" stroke-width="1.5" />
+  <line x1="510" y1="130" x2="510" y2="300" stroke="#8b949e" stroke-width="1.5" />
+  <line x1="510" y1="130" x2="750" y2="130" class="grid-line" />
+  <line x1="510" y1="215" x2="750" y2="215" class="grid-line" />
+
+  <!-- Queue size timeline curve -->
+  <path d="M 510,280 L 550,280 L 570,180 L 610,190 L 630,250 L 680,240 L 710,160 L 750,150" fill="none" stroke="#fbbf24" stroke-width="2.5" />
+  <circle cx="710" cy="160" r="4" fill="#fbbf24" />
+
+  <text x="525" y="125" class="text-val" fill="#fbbf24">QUEUE OCCUPANCY L_q(t)</text>
+  <text x="635" y="280" class="text-val" fill="#94a3b8">Normal Flow</text>
+  <text x="700" y="200" class="text-val" fill="#f43f5e">Peak load</text>
+
+  <!-- Mathematics Panel (Bottom Right) -->
+  <rect x="490" y="345" width="280" height="110" rx="8" fill="#1e293b" stroke="#334155" />
+  <text x="505" y="370" class="text-val text-bold" fill="#ffffff">QUEUE CONSERVATION MODEL</text>
+  <text x="505" y="390" class="text-math">dL_q/dt = λ_ingress(t) - μ_process(t)</text>
+  <text x="505" y="415" class="text-val">Average Cycle Time: <tspan fill="#10b981">4.21 s</tspan></text>
+  <text x="505" y="435" class="text-val">Assembly line status: <tspan fill="#10b981">NORMAL OPERATIONS</tspan></text>
+</svg>

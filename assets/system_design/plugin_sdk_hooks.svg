@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#181922" />
+      <stop offset="100%" stop-color="#0a0a0f" />
+    </radialGradient>
+    
+    <!-- Code block gradient -->
+    <linearGradient id="codeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#12131a" />
+      <stop offset="100%" stop-color="#0b0b0f" />
+    </linearGradient>
+
+    <linearGradient id="sdkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    
+    <linearGradient id="pluginGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#58a6ff" />
+      <stop offset="100%" stop-color="#0969da" />
+    </linearGradient>
+  </defs>
+
+  <style>
+    .title { font-family: 'Outfit', 'Inter', sans-serif; font-size: 22px; fill: #ffffff; font-weight: 700; }
+    .subtitle { font-family: 'Inter', sans-serif; font-size: 13px; fill: #8b949e; }
+    .node-title { font-family: 'Outfit', sans-serif; font-size: 14px; fill: #ffffff; font-weight: bold; text-anchor: middle; }
+    .node-text { font-family: 'Inter', sans-serif; font-size: 11px; fill: #c9d1d9; text-anchor: middle; }
+    .code-text { font-family: 'Fira Code', monospace; font-size: 11px; fill: #a5d6ff; }
+    .code-kw { fill: #ff7b72; }
+    .code-fn { fill: #d2a8ff; }
+    .code-str { fill: #a5d6ff; }
+    .arrow-label { font-family: 'Inter', sans-serif; font-size: 10px; fill: #8b949e; text-anchor: middle; }
+    .step-badge { fill: #e1c532; stroke: #0a0a0f; stroke-width: 1.5; }
+    .step-text { font-family: 'Outfit', sans-serif; font-size: 11px; fill: #0a0a0f; font-weight: bold; text-anchor: middle; }
+  </style>
+
+  <!-- Background -->
+  <rect width="1000" height="600" rx="12" fill="url(#bgGrad)" />
+
+  <g opacity="0.04">
+    <path d="M 0,50 L 1000,50 M 0,100 L 1000,100 M 0,150 L 1000,150 M 0,200 L 1000,200 M 0,250 L 1000,250 M 0,300 L 1000,300 M 0,350 L 1000,350 M 0,400 L 1000,400 M 0,450 L 1000,450 M 0,500 L 1000,500" stroke="#ffffff" />
+    <path d="M 100,0 L 100,600 M 200,0 L 200,600 M 300,0 L 300,600 M 400,0 L 400,600 M 500,0 L 500,600 M 600,0 L 600,600 M 700,0 L 700,600 M 800,0 L 800,600 M 900,0 L 900,600" stroke="#ffffff" />
+  </g>
+
+  <!-- Headers -->
+  <text x="40" y="50" class="title">SMUL GPSE — Plugin Container SDK Hooks</text>
+  <text x="40" y="72" class="subtitle">API entry-points and variable hooking architecture for custom container extensions</text>
+
+  <!-- ==================== PLUGINS AND SDK LIFECYCLE FLOW ==================== -->
+
+  <!-- Container Box -->
+  <g transform="translate(60, 130)">
+    <rect width="400" height="420" rx="10" fill="url(#codeGrad)" stroke="#30363d" stroke-width="1.5" />
+    <rect x="0" y="0" width="400" height="30" rx="10" fill="#161b22" stroke="#30363d" />
+    <text x="15" y="19" class="code-text" fill="#8b949e">plugin_entry.py (Using Custom SDK)</text>
+    
+    <g transform="translate(20, 50)">
+      <text x="0" y="15" class="code-text"><tspan class="code-kw">from</tspan> smul_gpse_sdk <tspan class="code-kw">import</tspan> PluginEngine</text>
+      
+      <text x="0" y="45" class="code-text"><tspan class="code-kw">class</tspan> <tspan fill="#f8e3a1">VortexPhysics</tspan>(PluginEngine):</text>
+      <text x="20" y="65" class="code-text"><tspan class="code-kw">def</tspan> <tspan class="code-fn">on_init</tspan>(self, config):</text>
+      <text x="40" y="85" class="code-text">self.viscosity = config[<tspan class="code-str">"visc"</tspan>]</text>
+      <text x="40" y="105" class="code-text">self.grid = np.zeros((64, 64))</text>
+
+      <text x="20" y="135" class="code-text"><tspan class="code-kw">def</tspan> <tspan class="code-fn">on_step</tspan>(self, dt):</text>
+      <text x="40" y="155" class="code-text"><tspan class="code-kw"># Compute navier-stokes simulation step</tspan></text>
+      <text x="40" y="175" class="code-text">self.grid = self.solver(self.grid, dt)</text>
+      <text x="40" y="195" class="code-text"><tspan class="code-kw">return</tspan> { <tspan class="code-str">"vortex_density"</tspan>: self.grid.tolist() }</text>
+
+      <text x="0" y="240" class="code-text"><tspan class="code-kw">if</tspan> __name__ == <tspan class="code-str">"__main__"</tspan>:</text>
+      <text x="20" y="260" class="code-text">plugin = VortexPhysics()</text>
+      <text x="20" y="280" class="code-text">plugin.start_loop()</text>
+    </g>
+  </g>
+
+  <!-- ==================== FLOW BLOCKS ==================== -->
+  
+  <!-- Block 1: Orchestrator SQS (Start Event) -->
+  <g transform="translate(560, 130)">
+    <rect width="180" height="70" rx="8" fill="url(#pluginGrad)" />
+    <text x="90" y="30" class="node-title">CDK / Fargate Task</text>
+    <text x="90" y="50" class="node-text">Triggers custom container</text>
+  </g>
+  <!-- Link 1 -> Code -->
+  <path d="M 560,165 L 480,165" stroke="#58a6ff" stroke-width="2" stroke-dasharray="3 3" fill="none" />
+  <polygon points="482,165 490,160 490,170" fill="#58a6ff" />
+  <!-- Step 1 Badge -->
+  <circle cx="520" cy="165" r="10" class="step-badge" />
+  <text x="520" y="169" class="step-text">1</text>
+  <text x="520" y="150" class="arrow-label">Initialise</text>
+
+  <!-- Block 2: JSON Config Parser (STDIN/File) -->
+  <g transform="translate(560, 240)">
+    <rect width="180" height="70" rx="8" fill="url(#sdkGrad)" />
+    <text x="90" y="30" class="node-title">SDK Config Parser</text>
+    <text x="90" y="50" class="node-text">Parses SQS parameters</text>
+  </g>
+  <!-- Link Code -> SDK -->
+  <path d="M 460,265 L 560,265" stroke="#10b981" stroke-width="2" fill="none" />
+  <polygon points="558,265 550,260 550,270" fill="#10b981" />
+  <!-- Step 2 Badge -->
+  <circle cx="510" cy="265" r="10" class="step-badge" />
+  <text x="510" y="269" class="step-text">2</text>
+  <text x="510" y="250" class="arrow-label">Config Ingest</text>
+
+  <!-- Block 3: State Bus Publisher (Redis) -->
+  <g transform="translate(560, 350)">
+    <rect width="180" height="70" rx="8" fill="url(#sdkGrad)" />
+    <text x="90" y="30" class="node-title">Redis Publisher</text>
+    <text x="90" y="50" class="node-text">Writes states to sim:id:state</text>
+  </g>
+  <!-- Link Code -> Redis -->
+  <path d="M 460,375 L 560,375" stroke="#10b981" stroke-width="2" fill="none" />
+  <polygon points="558,375 550,360 550,380" fill="#10b981" />
+  <!-- Step 3 Badge -->
+  <circle cx="510" cy="375" r="10" class="step-badge" />
+  <text x="510" y="379" class="step-text">3</text>
+  <text x="510" y="360" class="arrow-label">Telemetry Output</text>
+
+  <!-- Block 4: API Gateway WS Relay -->
+  <g transform="translate(790, 350)">
+    <rect width="160" height="70" rx="8" fill="#1e2235" stroke="#30363d" stroke-width="1.5" />
+    <text x="80" y="30" class="node-title" fill="#84fab0">WebSocket Gateway</text>
+    <text x="80" y="50" class="node-text">Relays custom JSON to UI</text>
+  </g>
+  <!-- Link Redis -> WS -->
+  <path d="M 740,385 L 790,385" stroke="#84fab0" stroke-width="2" fill="none" />
+  <polygon points="788,385 780,380 780,390" fill="#84fab0" />
+  <!-- Step 4 Badge -->
+  <circle cx="765" cy="385" r="10" class="step-badge" />
+  <text x="765" y="389" class="step-text">4</text>
+  <text x="765" y="405" class="arrow-label">Frame Relay</text>
+
+  <!-- Block 5: UI Rendering (Three.js custom component) -->
+  <g transform="translate(790, 460)">
+    <rect width="160" height="70" rx="8" fill="#1e2235" stroke="#30363d" stroke-width="1.5" />
+    <text x="80" y="30" class="node-title" fill="#ff7b72">Frontend Component</text>
+    <text x="80" y="50" class="node-text">Dynamic shaders render matrix</text>
+  </g>
+  <!-- Link WS -> UI -->
+  <path d="M 870,420 L 870,460" stroke="#ff7b72" stroke-width="2" fill="none" />
+  <polygon points="870,458 865,450 875,450" fill="#ff7b72" />
+  <!-- Step 5 Badge -->
+  <circle cx="870" cy="440" r="10" class="step-badge" />
+  <text x="870" y="444" class="step-text">5</text>
+  <text x="895" y="443" class="arrow-label">Render</text>
+</svg>

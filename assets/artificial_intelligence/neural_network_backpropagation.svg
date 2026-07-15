@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#1c1f2e" />
+      <stop offset="100%" stop-color="#0b0d16" />
+    </radialGradient>
+
+    <!-- Node Glow Filters -->
+    <filter id="nodeGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-family: 'Outfit', 'Inter', sans-serif; font-size: 20px; fill: #ffffff; font-weight: 700; }
+    .subtitle { font-family: 'Inter', sans-serif; font-size: 12px; fill: #8b949e; }
+    .text-val { font-family: 'Fira Code', 'Courier New', monospace; font-size: 11px; fill: #e1e4e8; }
+    .text-math { font-family: 'Georgia', serif; font-size: 13px; fill: #cbd5e1; font-style: italic; }
+    .text-bold { font-weight: bold; }
+    .grid-line { stroke: #334155; stroke-dasharray: 4 4; stroke-width: 0.5; }
+    .forward-path { fill: none; stroke: #38bdf8; stroke-width: 1.5; opacity: 0.8; }
+    .backward-path { fill: none; stroke: #f43f5e; stroke-width: 1.5; stroke-dasharray: 4 2; opacity: 0.8; }
+    .input-node { fill: #1e293b; stroke: #94a3b8; stroke-width: 2.5; }
+    .hidden-node { fill: #1e293b; stroke: #38bdf8; stroke-width: 2.5; }
+    .output-node { fill: #1e293b; stroke: #10b981; stroke-width: 2.5; }
+  </style>
+
+  <!-- Background -->
+  <rect width="800" height="500" rx="12" fill="url(#bgGrad)" />
+  
+  <text x="35" y="45" class="title">Scenario: Deep Neural Network Backpropagation</text>
+  <text x="35" y="65" class="subtitle">Forward activations &amp; weight optimization via gradient descent (Adam optimizer simulation)</text>
+
+  <!-- Neural Network Layers (Left side) -->
+  <!-- Layer Connections: Forward (cyan) & Backward (pink) -->
+  <!-- Input to Hidden -->
+  <path d="M 100,160 L 220,130" class="forward-path" />
+  <path d="M 100,160 L 220,250 M 100,160 L 220,370" class="forward-path" stroke-opacity="0.3" />
+  <path d="M 100,250 L 220,130" class="forward-path" />
+  <path d="M 100,250 L 220,250" class="forward-path" />
+  <path d="M 100,250 L 220,370" class="forward-path" />
+  <path d="M 100,340 L 220,250 M 100,340 L 220,130" class="forward-path" stroke-opacity="0.3" />
+  <path d="M 100,340 L 220,370" class="forward-path" />
+
+  <!-- Hidden to Output -->
+  <path d="M 220,130 L 340,200" class="forward-path" />
+  <path d="M 220,250 L 340,200" class="forward-path" />
+  <path d="M 220,250 L 340,300" class="forward-path" />
+  <path d="M 220,370 L 340,300" class="forward-path" />
+
+  <!-- Backpropagation Arrows (Pink overlay paths) -->
+  <path d="M 340,200 L 220,250" class="backward-path" />
+  <path d="M 220,250 L 100,250" class="backward-path" />
+  <path d="M 340,300 L 220,370" class="backward-path" />
+
+  <!-- Layer Nodes -->
+  <!-- Input Nodes -->
+  <circle cx="100" cy="160" r="14" class="input-node" />
+  <circle cx="100" cy="250" r="14" class="input-node" />
+  <circle cx="100" cy="340" r="14" class="input-node" />
+  <text x="94" y="380" class="text-val" fill="#94a3b8">X_i</text>
+
+  <!-- Hidden Nodes -->
+  <circle cx="220" cy="130" r="14" class="hidden-node" />
+  <circle cx="220" cy="250" r="14" class="hidden-node" filter="url(#nodeGlow)" />
+  <circle cx="220" cy="370" r="14" class="hidden-node" />
+  <text x="214" y="410" class="text-val" fill="#38bdf8">H_j</text>
+
+  <!-- Output Nodes -->
+  <circle cx="340" cy="200" r="14" class="output-node" filter="url(#nodeGlow)" />
+  <circle cx="340" cy="300" r="14" class="output-node" />
+  <text x="334" y="340" class="text-val" fill="#10b981">Y_k</text>
+
+  <!-- Forward/Backward labels -->
+  <text x="140" y="110" class="text-val" fill="#38bdf8">Forward Pass</text>
+  <text x="150" y="295" class="text-val" fill="#f43f5e">Backprop</text>
+
+  <!-- Loss Curve Chart (Right) -->
+  <rect x="490" y="100" width="280" height="230" rx="8" fill="#0d1117" stroke="#334155" />
+  <line x1="510" y1="300" x2="750" y2="300" stroke="#8b949e" stroke-width="1.5" />
+  <line x1="510" y1="130" x2="510" y2="300" stroke="#8b949e" stroke-width="1.5" />
+  <line x1="510" y1="130" x2="750" y2="130" class="grid-line" />
+  <line x1="510" y1="215" x2="750" y2="215" class="grid-line" />
+
+  <!-- Damped loss curve -->
+  <path d="M 510,140 Q 550,280 600,220 T 670,290 H 750" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" />
+  <circle cx="670" cy="290" r="4" fill="#f59e0b" />
+
+  <text x="525" y="125" class="text-val" fill="#f59e0b">LOSS FUNCTION E(t)</text>
+  <text x="680" y="275" class="text-val" fill="#10b981">Optimal</text>
+
+  <!-- Mathematics Panel (Bottom Right) -->
+  <rect x="490" y="345" width="280" height="110" rx="8" fill="#1e293b" stroke="#334155" />
+  <text x="505" y="370" class="text-val text-bold" fill="#ffffff">WEIGHT UPDATE RULE</text>
+  <text x="505" y="390" class="text-math">w_{ij} ← w_{ij} - η (∂E / ∂w_{ij})</text>
+  <text x="505" y="415" class="text-val">Learning Rate (η): <tspan fill="#38bdf8">0.001</tspan></text>
+  <text x="505" y="435" class="text-val">Loss type: <tspan fill="#f43f5e">Mean Squared Error</tspan></text>
+</svg>

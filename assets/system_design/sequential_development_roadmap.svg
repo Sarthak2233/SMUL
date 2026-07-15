@@ -1,0 +1,299 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 800" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#181922" />
+      <stop offset="100%" stop-color="#0a0a0f" />
+    </radialGradient>
+    
+    <!-- Harness node gradient (Indigo/Purple) -->
+    <linearGradient id="harnessGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#4f46e5" />
+    </linearGradient>
+
+    <!-- Product node gradient (Emerald/Green) -->
+    <linearGradient id="productGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    
+    <!-- Card background for active/pending cards -->
+    <linearGradient id="cardBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e2030" />
+      <stop offset="100%" stop-color="#12131a" />
+    </linearGradient>
+
+    <!-- Drop Shadow -->
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.4" />
+    </filter>
+
+    <!-- Marker definition for arrows -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#4b5563" />
+    </marker>
+    
+    <marker id="arrow-unlock" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f59e0b" />
+    </marker>
+  </defs>
+
+  <style>
+    .title { font-family: 'Outfit', 'Inter', sans-serif; font-size: 24px; fill: #ffffff; font-weight: 700; }
+    .subtitle { font-family: 'Inter', sans-serif; font-size: 13px; fill: #8b949e; }
+    .track-header { font-family: 'Outfit', sans-serif; font-size: 18px; fill: #ffffff; font-weight: bold; }
+    .node-id { font-family: 'Outfit', sans-serif; font-size: 13px; fill: #ffffff; font-weight: 800; }
+    .node-title { font-family: 'Outfit', sans-serif; font-size: 13px; fill: #ffffff; font-weight: bold; }
+    .node-desc { font-family: 'Inter', sans-serif; font-size: 10px; fill: #9ca3af; }
+    .lock-text { font-family: 'Inter', sans-serif; font-size: 11px; fill: #f59e0b; font-weight: bold; }
+  </style>
+
+  <!-- Background -->
+  <rect width="1000" height="800" rx="16" fill="url(#bgGrad)" stroke="#1f2937" stroke-width="1.5" />
+
+  <!-- Grid overlay -->
+  <g opacity="0.03">
+    <path d="M 0,50 L 1000,50 M 0,100 L 1000,100 M 0,150 L 1000,150 M 0,200 L 1000,200 M 0,250 L 1000,250 M 0,300 L 1000,300 M 0,350 L 1000,350 M 0,400 L 1000,400 M 0,450 L 1000,450 M 0,500 L 1000,500 M 0,550 L 1000,550 M 0,600 L 1000,600 M 0,650 L 1000,650 M 0,700 L 1000,700 M 0,750 L 1000,750" stroke="#ffffff" stroke-width="1" />
+    <path d="M 100,0 L 100,800 M 200,0 L 200,800 M 300,0 L 300,800 M 400,0 L 400,800 M 500,0 L 500,800 M 600,0 L 600,800 M 700,0 L 700,800 M 800,0 L 800,800 M 900,0 L 900,800" stroke="#ffffff" stroke-width="1" />
+  </g>
+
+  <!-- Header -->
+  <text x="50" y="45" class="title">SMUL GPSE — Roadmap State</text>
+  <text x="50" y="67" class="subtitle">Sequential advancement roadmap linking verification milestones to feature unlocks</text>
+
+  <!-- Track Headers -->
+  <text x="100" y="105" class="track-header">Harness Verification Track</text>
+  <text x="600" y="105" class="track-header">Product Capability Track</text>
+
+  <!-- Draw Harness Nodes -->
+
+  <!-- Node H0 -->
+  <g transform="translate(100, 130)" filter="url(#shadow)">
+    <rect width="300" height="56" rx="8" fill="url(#cardBg)" stroke="#374151" stroke-width="1.5" />
+    <!-- ID badge -->
+    <rect x="0" y="0" width="45" height="56" rx="8" fill="url(#harnessGrad)" />
+    <text x="22" y="32" text-anchor="middle" class="node-id">H0</text>
+    <!-- Content -->
+    <text x="60" y="24" class="node-title">Contracts &amp; State Base</text>
+    <text x="60" y="42" class="node-desc">Resolve AGENTS.md &amp; initialize tasks</text>
+  </g>
+
+  <!-- Node H1 -->
+  <g transform="translate(100, 210)" filter="url(#shadow)">
+    <rect width="300" height="56" rx="8" fill="url(#cardBg)" stroke="#374151" stroke-width="1.5" />
+    <!-- ID badge -->
+    <rect x="0" y="0" width="45" height="56" rx="8" fill="url(#harnessGrad)" />
+    <text x="22" y="32" text-anchor="middle" class="node-id">H1</text>
+    <!-- Content -->
+    <text x="60" y="24" class="node-title">Cursor Agent Skills</text>
+    <text x="60" y="42" class="node-desc">Author implement &amp; steering skills</text>
+  </g>
+
+  <!-- Node H2 -->
+  <g transform="translate(100, 290)" filter="url(#shadow)">
+    <rect width="300" height="56" rx="8" fill="url(#cardBg)" stroke="#374151" stroke-width="1.5" />
+    <!-- ID badge -->
+    <rect x="0" y="0" width="45" height="56" rx="8" fill="url(#harnessGrad)" />
+    <text x="22" y="32" text-anchor="middle" class="node-id">H2</text>
+    <!-- Content -->
+    <text x="60" y="24" class="node-title">Sensors &amp; Mid-Loop Arch</text>
+    <text x="60" y="42" class="node-desc">AST checks, Ruff, Mypy &amp; layer checks</text>
+  </g>
+
+  <!-- Node H3 -->
+  <g transform="translate(100, 370)" filter="url(#shadow)">
+    <rect width="300" height="56" rx="8" fill="url(#cardBg)" stroke="#374151" stroke-width="1.5" />
+    <!-- ID badge -->
+    <rect x="0" y="0" width="45" height="56" rx="8" fill="url(#harnessGrad)" />
+    <text x="22" y="32" text-anchor="middle" class="node-id">H3</text>
+    <!-- Content -->
+    <text x="60" y="24" class="node-title">Agent stop_hook Loop</text>
+    <text x="60" y="42" class="node-desc">Self-correction &amp; failure inject</text>
+  </g>
+
+  <!-- Node H4 -->
+  <g transform="translate(100, 450)" filter="url(#shadow)">
+    <rect width="300" height="56" rx="8" fill="url(#cardBg)" stroke="#374151" stroke-width="1.5" />
+    <!-- ID badge -->
+    <rect x="0" y="0" width="45" height="56" rx="8" fill="url(#harnessGrad)" />
+    <text x="22" y="32" text-anchor="middle" class="node-id">H4</text>
+    <!-- Content -->
+    <text x="60" y="24" class="node-title">DSA Case Library</text>
+    <text x="60" y="42" class="node-desc">A*, percolation, queues invariants</text>
+  </g>
+
+  <!-- Node H5 -->
+  <g transform="translate(100, 530)" filter="url(#shadow)">
+    <rect width="300" height="56" rx="8" fill="url(#cardBg)" stroke="#374151" stroke-width="1.5" />
+    <!-- ID badge -->
+    <rect x="0" y="0" width="45" height="56" rx="8" fill="url(#harnessGrad)" />
+    <text x="22" y="32" text-anchor="middle" class="node-id">H5</text>
+    <!-- Content -->
+    <text x="60" y="24" class="node-title">Runtime Lambda Mirror</text>
+    <text x="60" y="42" class="node-desc">Import-free validation dynamic sandbox</text>
+  </g>
+
+  <!-- Node H6 -->
+  <g transform="translate(100, 610)" filter="url(#shadow)">
+    <rect width="300" height="56" rx="8" fill="url(#cardBg)" stroke="#374151" stroke-width="1.5" />
+    <!-- ID badge -->
+    <rect x="0" y="0" width="45" height="56" rx="8" fill="url(#harnessGrad)" />
+    <text x="22" y="32" text-anchor="middle" class="node-id">H6</text>
+    <!-- Content -->
+    <text x="60" y="24" class="node-title">SDK Stub &amp; CI Pipeline</text>
+    <text x="60" y="42" class="node-desc">PluginEngine stub &amp; GitHub workflows</text>
+  </g>
+
+  <!-- Node H7 -->
+  <g transform="translate(100, 690)" filter="url(#shadow)">
+    <rect width="300" height="56" rx="8" fill="url(#cardBg)" stroke="#374151" stroke-width="1.5" />
+    <!-- ID badge -->
+    <rect x="0" y="0" width="45" height="56" rx="8" fill="url(#harnessGrad)" />
+    <text x="22" y="32" text-anchor="middle" class="node-id">H7</text>
+    <!-- Content -->
+    <text x="60" y="24" class="node-title">Inferential Prompt Review</text>
+    <text x="60" y="42" class="node-desc">CodeReview &amp; CodeJudge LLM gates</text>
+  </g>
+
+  <!-- Node P0 -->
+  <g transform="translate(600, 130)" filter="url(#shadow)">
+    <rect width="300" height="56" rx="8" fill="url(#cardBg)" stroke="#374151" stroke-width="1.5" />
+    <!-- ID badge -->
+    <rect x="0" y="0" width="45" height="56" rx="8" fill="url(#productGrad)" />
+    <text x="22" y="32" text-anchor="middle" class="node-id">P0</text>
+    <!-- Content -->
+    <text x="60" y="24" class="node-title">CDK Infrastructure</text>
+    <text x="60" y="42" class="node-desc">S3, DynamoDB, Redis deployments</text>
+  </g>
+
+  <!-- Node P1 -->
+  <g transform="translate(600, 210)" filter="url(#shadow)">
+    <rect width="300" height="56" rx="8" fill="url(#cardBg)" stroke="#374151" stroke-width="1.5" />
+    <!-- ID badge -->
+    <rect x="0" y="0" width="45" height="56" rx="8" fill="url(#productGrad)" />
+    <text x="22" y="32" text-anchor="middle" class="node-id">P1</text>
+    <!-- Content -->
+    <text x="60" y="24" class="node-title">Auth &amp; Projects System</text>
+    <text x="60" y="42" class="node-desc">User registries &amp; workspace controls</text>
+  </g>
+
+  <!-- Node P2 -->
+  <g transform="translate(600, 290)" filter="url(#shadow)">
+    <rect width="300" height="56" rx="8" fill="url(#cardBg)" stroke="#374151" stroke-width="1.5" />
+    <!-- ID badge -->
+    <rect x="0" y="0" width="45" height="56" rx="8" fill="url(#productGrad)" />
+    <text x="22" y="32" text-anchor="middle" class="node-id">P2</text>
+    <!-- Content -->
+    <text x="60" y="24" class="node-title">Simulation Loop Orchestration</text>
+    <text x="60" y="42" class="node-desc">Fargate launch, SQS, WS states</text>
+  </g>
+
+  <!-- Node P3 -->
+  <g transform="translate(600, 370)" filter="url(#shadow)">
+    <rect width="300" height="56" rx="8" fill="url(#cardBg)" stroke="#374151" stroke-width="1.5" />
+    <!-- ID badge -->
+    <rect x="0" y="0" width="45" height="56" rx="8" fill="url(#productGrad)" />
+    <text x="22" y="32" text-anchor="middle" class="node-id">P3</text>
+    <!-- Content -->
+    <text x="60" y="24" class="node-title">SciPy/PyBullet Loop &amp; Three.js</text>
+    <text x="60" y="42" class="node-desc">Double pendulum render at ~60Hz</text>
+  </g>
+
+  <!-- Node P4 -->
+  <g transform="translate(600, 450)" filter="url(#shadow)">
+    <rect width="300" height="56" rx="8" fill="url(#cardBg)" stroke="#374151" stroke-width="1.5" />
+    <!-- ID badge -->
+    <rect x="0" y="0" width="45" height="56" rx="8" fill="url(#productGrad)" />
+    <text x="22" y="32" text-anchor="middle" class="node-id">P4</text>
+    <!-- Content -->
+    <text x="60" y="24" class="node-title">LLM Assistant Parse Flow</text>
+    <text x="60" y="42" class="node-desc">Prompt to simulation translation</text>
+  </g>
+
+  <!-- Node P5 -->
+  <g transform="translate(600, 530)" filter="url(#shadow)">
+    <rect width="300" height="56" rx="8" fill="url(#cardBg)" stroke="#374151" stroke-width="1.5" />
+    <!-- ID badge -->
+    <rect x="0" y="0" width="45" height="56" rx="8" fill="url(#productGrad)" />
+    <text x="22" y="32" text-anchor="middle" class="node-id">P5</text>
+    <!-- Content -->
+    <text x="60" y="24" class="node-title">MediaPipe gesture controls</text>
+    <text x="60" y="42" class="node-desc">Hand tracking gesture impulses</text>
+  </g>
+
+  <!-- Node P6 -->
+  <g transform="translate(600, 610)" filter="url(#shadow)">
+    <rect width="300" height="56" rx="8" fill="url(#cardBg)" stroke="#374151" stroke-width="1.5" />
+    <!-- ID badge -->
+    <rect x="0" y="0" width="45" height="56" rx="8" fill="url(#productGrad)" />
+    <text x="22" y="32" text-anchor="middle" class="node-id">P6</text>
+    <!-- Content -->
+    <text x="60" y="24" class="node-title">AI Agents &amp; RL Dashboard</text>
+    <text x="60" y="42" class="node-desc">PyTorch loop &amp; live feedback dashboard</text>
+  </g>
+
+  <!-- Node P7 -->
+  <g transform="translate(600, 690)" filter="url(#shadow)">
+    <rect width="300" height="56" rx="8" fill="url(#cardBg)" stroke="#374151" stroke-width="1.5" />
+    <!-- ID badge -->
+    <rect x="0" y="0" width="45" height="56" rx="8" fill="url(#productGrad)" />
+    <text x="22" y="32" text-anchor="middle" class="node-id">P7</text>
+    <!-- Content -->
+    <text x="60" y="24" class="node-title">Production Snapshots &amp; SDK</text>
+    <text x="60" y="42" class="node-desc">Redis S3 resume, plugin engines</text>
+  </g>
+
+  <!-- Harness link 0 -->
+  <line x1="250" y1="186" x2="250" y2="204" stroke="#4b5563" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Harness link 1 -->
+  <line x1="250" y1="266" x2="250" y2="284" stroke="#4b5563" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Harness link 2 -->
+  <line x1="250" y1="346" x2="250" y2="364" stroke="#4b5563" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Harness link 3 -->
+  <line x1="250" y1="426" x2="250" y2="444" stroke="#4b5563" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Harness link 4 -->
+  <line x1="250" y1="506" x2="250" y2="524" stroke="#4b5563" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Harness link 5 -->
+  <line x1="250" y1="586" x2="250" y2="604" stroke="#4b5563" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Harness link 6 -->
+  <line x1="250" y1="666" x2="250" y2="684" stroke="#4b5563" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Product link 0 -->
+  <line x1="750" y1="186" x2="750" y2="204" stroke="#4b5563" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Product link 1 -->
+  <line x1="750" y1="266" x2="750" y2="284" stroke="#4b5563" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Product link 2 -->
+  <line x1="750" y1="346" x2="750" y2="364" stroke="#4b5563" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Product link 3 -->
+  <line x1="750" y1="426" x2="750" y2="444" stroke="#4b5563" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Product link 4 -->
+  <line x1="750" y1="506" x2="750" y2="524" stroke="#4b5563" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Product link 5 -->
+  <line x1="750" y1="586" x2="750" y2="604" stroke="#4b5563" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Product link 6 -->
+  <line x1="750" y1="666" x2="750" y2="684" stroke="#4b5563" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Unlock constraint line from H2 to P0 -->
+  <path d="M 400 318 C 500 318, 500 158, 592 158" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="6,4" marker-end="url(#arrow-unlock)" />
+  
+  <!-- Unlock lock icon & text badge -->
+  <g transform="translate(430, 226)">
+    <rect width="140" height="24" rx="12" fill="#251b10" stroke="#f59e0b" stroke-width="1.5" />
+    <!-- Lock symbol -->
+    <path d="M 18,7 L 18,10 L 14,10 L 14,7 C 14,5.3 15.3,4 17,4 C 18.7,4 20,5.3 20,7 Z M 21,10 L 13,10 C 12.4,10 12,10.4 12,11 L 12,17 C 12,17.6 12.4,18 13,18 L 21,18 C 21.6,18 22,17.6 22,17 L 22,11 C 22,10.4 21.6,10 21,10 Z" fill="#f59e0b" transform="scale(0.8) translate(3, 2)" />
+    <text x="32" y="16" class="lock-text">H2 Unlocks P0</text>
+  </g>
+</svg>

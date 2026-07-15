@@ -1,0 +1,1402 @@
+SMUL GPSE Super Harness (Architecture + DSA Fitness) — Enhanced
+
+Decisions locked
+
+
+
+
+
+1C: Architecture fitness mid-loop; DSA fitness always last as the terminal feedback sensor
+
+
+
+2C: Ship Cursor agent harness first, then mirror into the runtime LLM code pipeline
+
+
+
+Workspace is design-only today (ideas.md, variables_and_schemas_deep_dive.md, deep-research-report.md, docs/community_library.md) — harness is greenfield bootstrap
+
+Why this harness exists
+
+From Fowler (Harness Engineering):
+
+
+
+Agent = Model + Harness. Guides (feedforward) raise first-try quality; sensors (feedback) enable self-correction. Computational sensors run every change; inferential sensors are slower and probabilistic.
+
+From Pocock (mattpocock/skills):
+
+
+
+Small composable skills, TDD at agreed seams, checkable completion criteria, progressive disclosure — predictability of process, not of output.
+
+From Addy Osmani / HumanLayer:
+
+
+
+Every agent mistake becomes a permanent harness rule (the ratchet). Back-pressure (typecheck/test/fitness) wired into the stop loop beats hoping the model “remembers” docs.
+
+DSA fitness addition: treat Data Structures & Algorithms quality of algorithm-bearing simulation code as a dedicated architecture-of-algorithms fitness category — golden cases, complexity budgets, structure choice, invariants — and place it as the final computational gate so the agent cannot claim done on a wrong or asymptotically broken algorithm.
+
+
+
+Control matrix (canonical)
+
+
+
+
+
+
+
+Stage
+
+
+
+Direction
+
+
+
+Type
+
+
+
+Host
+
+
+
+Fail behaviour
+
+
+
+
+
+AGENTS.md + CONTEXT.md
+
+
+
+Feedforward
+
+
+
+Inferential text
+
+
+
+Every agent turn
+
+
+
+N/A (guides)
+
+
+
+
+
+JSON Schema validation
+
+
+
+Feedforward
+
+
+
+Computational
+
+
+
+Lambda / local CLI
+
+
+
+Reject input
+
+
+
+
+
+Skills (smul-implement, TDD)
+
+
+
+Feedforward
+
+
+
+Inferential process
+
+
+
+Cursor
+
+
+
+Agent must follow steps
+
+
+
+
+
+AST safety
+
+
+
+Feedback
+
+
+
+Computational
+
+
+
+harness.pipeline
+
+
+
+Stop stage; remediate
+
+
+
+
+
+Structure symbols
+
+
+
+Feedback
+
+
+
+Computational
+
+
+
+mid-pipeline
+
+
+
+Stop stage; remediate
+
+
+
+
+
+Lint + types (ruff/mypy)
+
+
+
+Feedback
+
+
+
+Computational
+
+
+
+mid-pipeline
+
+
+
+Stop stage; remediate
+
+
+
+
+
+Architecture fitness
+
+
+
+Feedback
+
+
+
+Computational
+
+
+
+mid-loop
+
+
+
+Block DSA; remediate layers
+
+
+
+
+
+Behaviour tests (pytest seams)
+
+
+
+Feedback
+
+
+
+Computational
+
+
+
+mid-loop
+
+
+
+Block DSA
+
+
+
+
+
+Optional CodeJudge
+
+
+
+Feedback
+
+
+
+Inferential
+
+
+
+after behaviour, before DSA
+
+
+
+Soft/hard gate later
+
+
+
+
+
+DSA fitness
+
+
+
+Feedback
+
+
+
+Computational
+
+
+
+ALWAYS LAST
+
+
+
+followup_message; forbid done
+
+
+
+
+
+Knowledge log
+
+
+
+Feedback memory
+
+
+
+Computational
+
+
+
+after pass/fail
+
+
+
+Steering fuel
+
+Non-negotiable rule: earlier stages may short-circuit on failure, but a green mid-pipeline never skips DSA. DSA is the last sensor before “done” / SQS enqueue.
+
+flowchart TD
+  subgraph ff [Feedforward]
+    AGENTS[AGENTS.md + CONTEXT.md]
+    Skills[Skills: smul-implement / TDD]
+    Schema[schemas/ JSON contracts]
+  end
+
+  subgraph mid [Mid-loop computational sensors]
+    AST[AST safety]
+    Struct[Structure symbols]
+    Lint[ruff + mypy]
+    Arch[Architecture fitness]
+    Beh[Behaviour pytest seams]
+  end
+
+  subgraph opt [Optional inferential]
+    Review[CodeReviewAgent plan]
+    Judge[CodeJudgeAgent semantic]
+  end
+
+  subgraph term [Terminal - always last]
+    DSA[DSA fitness suite]
+    Know[harness/knowledge log]
+  end
+
+  AGENTS --> Skills
+  Schema --> Skills
+  Review -.-> Skills
+  Skills --> AST --> Struct --> Lint --> Arch --> Beh
+  Beh --> Judge
+  Judge --> DSA
+  Beh --> DSA
+  DSA -->|fail LLM-optimized remediation| Skills
+  DSA -->|pass| Know
+
+
+
+Doc contradictions resolved upfront (Phase 0)
+
+These conflicts exist across the four design docs. The harness picks one canonical answer and encodes it in AGENTS.md + schemas/:
+
+
+
+
+
+
+
+Conflict
+
+
+
+Canonical choice for harness
+
+
+
+
+
+Plugin ABC name
+
+
+
+PluginEngine (on_init, on_step, start_loop) — matches community SDK
+
+
+
+
+
+Inline LLM code API
+
+
+
+Separate contract: run_simulation / get_state (not plugins)
+
+
+
+
+
+Energy field
+
+
+
+State uses nested energy.total; AGENTS forbids bare total_energy at top level
+
+
+
+
+
+Redis model
+
+
+
+Key sim:{id}:state (JSON string) + optional pub/sub fanout later
+
+
+
+
+
+WS envelope
+
+
+
+Always { action, simulationId, payload }
+
+
+
+
+
+Rules file
+
+
+
+Single AGENTS.md (no parallel SIMULATION_RULES.md)
+
+
+
+
+
+AST module whitelist
+
+
+
+Start with docs: numpy, scipy, math, pybullet; extend via harness/config.yaml
+
+
+
+
+
+Euler vs solve_ivp
+
+
+
+ODE sims must use solve_ivp; discrete RL cart-pole demos are exempt via engineType
+
+
+
+Target directory tree (harness-first)
+
+SMUL-GPSE/
+├── AGENTS.md
+├── CONTEXT.md
+├── pyproject.toml                 # harness package + pytest/ruff/mypy
+├── .cursor/
+│   ├── hooks.json
+│   ├── hooks/
+│   │   └── stop_dsa_fitness.sh    # stdin JSON → pipeline → followup_message
+│   └── skills/
+│       ├── smul-harness/SKILL.md
+│       ├── smul-implement/SKILL.md
+│       ├── architecture-fitness/SKILL.md
+│       ├── dsa-fitness/SKILL.md
+│       └── harness-steer/SKILL.md
+├── docs/agents/
+│   ├── domain.md
+│   ├── issue-tracker.md
+│   └── triage-labels.md
+├── schemas/
+│   ├── dynamodb/
+│   ├── sqs/
+│   ├── websocket/
+│   └── harness/
+│       ├── PipelineReport.schema.json
+│       └── DsaCaseSpec.schema.json
+├── harness/
+│   ├── __init__.py
+│   ├── __main__.py                # python -m harness
+│   ├── config.yaml                # stage order, budgets, whitelist
+│   ├── pipeline.py
+│   ├── report.py                  # JSON + MD writers
+│   ├── remediation.py             # LLM-optimized failure messages
+│   ├── sensors/
+│   │   ├── ast_safety.py
+│   │   ├── structure.py
+│   │   └── lint_types.py
+│   ├── fitness/
+│   │   ├── architecture.py
+│   │   ├── architecture_rules.py  # layer map
+│   │   └── dsa/
+│   │       ├── runner.py
+│   │       ├── loader.py
+│   │       ├── complexity.py
+│   │       ├── structures.py
+│   │       └── cases/
+│   │           ├── pathfinding_astar/
+│   │           ├── forest_fire_percolation/
+│   │           └── graph_queue/
+│   ├── knowledge/
+│   │   ├── log.py
+│   │   └── entries/               # append-only JSONL
+│   ├── reports/                   # gitignored except .gitkeep
+│   └── tests/                     # tests for the harness itself
+├── ai/
+│   ├── prompts/
+│   │   ├── code_review_agent.md
+│   │   └── code_judge_agent.md
+│   └── rules/                     # snippets prepended to LLM system prompt
+├── sdk/
+│   └── smul_gpse_sdk/
+│       ├── engine.py              # PluginEngine ABC
+│       └── state_bus.py
+└── backend/functions/shared/
+    └── validators.py              # thin Lambda wrapper → harness.pipeline
+
+App frontend/ / full Fargate stack stay out of scope until pipeline is green.
+
+
+
+Phase 0 — Contracts + substrate
+
+AGENTS.md (feedforward constitution)
+
+Must include:
+
+
+
+
+
+Physics + serverless rules (from ideas.md §Harness), with energy/WS/Redis canonical forms above
+
+
+
+Mandatory verification loop order (copy of control matrix)
+
+
+
+“Never claim done without green DSA fitness report at harness/reports/latest.json”
+
+
+
+Two code contracts: inline (run_simulation/get_state) vs plugin (PluginEngine)
+
+
+
+Ratchet rule: new recurring failures → open /harness-steer, do not silently retry forever
+
+CONTEXT.md (glossary)
+
+Terms: Harness, Guide, Sensor, Fitness, Architecture fitness, DSA fitness, Seam, PluginEngine, Scenario, Steering loop, Remediation message.
+
+schemas/harness/
+
+
+
+
+
+PipelineReport.schema.json: { stages[], overall_pass, dsa_pass, report_path, remediation[] }
+
+
+
+DsaCaseSpec.schema.json: domain id, entrypoint, Big-O, required structures, fixture paths, invariant module
+
+harness/config.yaml (single source of stage order)
+
+stages:
+  - ast_safety
+  - structure
+  - lint_types
+  - architecture
+  - behaviour
+  - dsa          # MUST be last
+dsa_always_run: true
+stop_hook:
+  loop_limit: 8
+  skip_on_status: [aborted]
+
+
+
+Phase 1 — Cursor skills (process feedforward)
+
+All under .cursor/skills/. Follow Pocock: checkable completion criteria; progressive disclosure into sibling .md files.
+
+
+
+
+
+
+
+Skill
+
+
+
+Invocation
+
+
+
+Job
+
+
+
+Done when
+
+
+
+
+
+smul-harness
+
+
+
+User
+
+
+
+Router over the skills below
+
+
+
+User routed
+
+
+
+
+
+smul-implement
+
+
+
+User
+
+
+
+Implement at agreed TDD seams; calls architecture then DSA
+
+
+
+Both fitness green + report written
+
+
+
+
+
+architecture-fitness
+
+
+
+Model
+
+
+
+Run mid-loop arch rules; inject remediation
+
+
+
+architecture stage exit 0
+
+
+
+
+
+dsa-fitness
+
+
+
+Model
+
+
+
+Run terminal DSA suite
+
+
+
+dsa stage exit 0 + report
+
+
+
+
+
+harness-steer
+
+
+
+User
+
+
+
+After ≥2 identical failure fingerprints, patch guides/sensors
+
+
+
+Diff proposed + knowledge entry
+
+smul-implement loop (explicit):
+
+
+
+
+
+Agree seams with user (Pocock TDD)
+
+
+
+Red → green for one slice
+
+
+
+Run python -m harness --through architecture
+
+
+
+If red → fix using remediation text → goto 3
+
+
+
+Run python -m harness (full, ends with DSA)
+
+
+
+If DSA red → fix → goto 5
+
+
+
+Only then allow commit / claim done
+
+
+
+Phase 2 — Computational sensors (shared core)
+
+CLI
+
+python -m harness                          # full pipeline, DSA last
+python -m harness --through architecture   # mid-loop only
+python -m harness --only dsa               # terminal only (still valid)
+python -m harness --target path/to/code.py # LLM snippet mode
+python -m harness --mode agent|lambda|ci
+
+Exit codes: 0 all green; 1 sensor failure; 2 config/schema error.
+
+Stage specs
+
+1. AST safety — promote variables_and_schemas_deep_dive.md §5 into harness/sensors/ast_safety.py:
+
+
+
+
+
+Whitelist modules from config.yaml
+
+
+
+Forbid eval/exec/open/compile/getattr/setattr
+
+
+
+Forbid os/sys/subprocess attribute calls
+
+
+
+Forbid relative imports
+
+
+
+Remediation example: Unsafe import 'os'. Remove it; use only numpy/scipy/math/pybullet.
+
+2. Structure — two modes:
+
+
+
+
+
+Inline: require run_simulation, get_state; state dict keys objects, time, energy
+
+
+
+Plugin: subclass of PluginEngine with on_init/on_step
+
+3. Lint/types — ruff check + mypy on touched targets; messages wrapped by remediation.py
+
+4. Architecture fitness (mid-loop) — start with stdlib AST + hand rules in architecture_rules.py (no hard dep yet); optional later: ArchUnitPython / import-linter.
+
+Canonical layer map (enforce as soon as dirs exist; stub-pass when dirs absent):
+
+
+
+
+
+
+
+From
+
+
+
+Must not depend on
+
+
+
+
+
+frontend/
+
+
+
+backend/, harness/ internals
+
+
+
+
+
+backend/functions/
+
+
+
+backend/containers/**/engine physics loops
+
+
+
+
+
+sdk/
+
+
+
+backend/functions/
+
+
+
+
+
+harness/
+
+
+
+frontend/
+
+Also: no cycles within harness/; plugin modules must import PluginEngine from sdk.
+
+Remediation format (Fowler “positive prompt injection”):
+
+ARCHITECTURE FITNESS FAILED
+Rule: lambda_must_not_import_fargate_engine
+File: backend/functions/llm/parse.py → backend/containers/simulation_engine/engine/physics.py
+Fix: Keep orchestration in Lambda; pass code via S3 URL / SQS payload. Do not import the Fargate engine package.
+
+5. Behaviour — pytest harness/tests/behaviour -q for package seams; later expand to backend unit seams.
+
+6. DSA fitness (terminal) — see Phase 4.
+
+Report artifact
+
+harness/reports/latest.json (+ .md twin) must satisfy PipelineReport.schema.json. Knowledge logger appends one JSONL line per run: {ts, mode, fingerprint, stage_failed, pass, summary}.
+
+
+
+Phase 3 — Stop hook (mechanical “DSA last”)
+
+.cursor/hooks.json
+
+{
+  "version": 1,
+  "hooks": {
+    "stop": [
+      {
+        "command": ".cursor/hooks/stop_dsa_fitness.sh",
+        "timeout": 120,
+        "loop_limit": 8,
+        "failClosed": false
+      }
+    ]
+  }
+}
+
+Hook algorithm (stop_dsa_fitness.sh → Python helper)
+
+
+
+
+
+Read stdin JSON: status, loop_count
+
+
+
+If status == "aborted" → print {} and exit (do not fight the user)
+
+
+
+If loop_count >= loop_limit → print {} and write harness/reports/loop_exhausted.md (human must intervene / /harness-steer)
+
+
+
+Run python -m harness --mode agent
+
+
+
+If overall pass → append knowledge success → print {}
+
+
+
+If fail → build followup_message from remediation.py including:
+
+
+
+
+
+Failed stage name (especially if DSA)
+
+
+
+First 3 remediation bullets
+
+
+
+Exact re-run command
+
+
+
+Explicit: “Do not claim done. Fix, then re-run until DSA is green.”
+
+This implements Osmani/Liran Tal back-pressure: agent stop → verify → auto continue until green or cap.
+
+Optional later: afterFileEdit for cheap AST-only on *.py (keep quality left without full DSA every keystroke). Full DSA stays on stop only (cost).
+
+
+
+Phase 4 — DSA case library (terminal fitness)
+
+Case package layout (per domain)
+
+harness/fitness/dsa/cases/<domain>/
+  spec.yaml          # Big-O, entrypoint, required structures, time budget
+  fixtures.json      # golden inputs/outputs
+  invariants.py      # functions(state) -> list[str] errors
+  reference.py       # known-good solution for differential testing
+  README.md          # human + agent summary
+
+Seed domains (aligned to assets)
+
+
+
+
+
+
+
+Domain
+
+
+
+Asset
+
+
+
+Correctness
+
+
+
+Complexity
+
+
+
+Structures
+
+
+
+Invariants
+
+
+
+
+
+pathfinding_astar
+
+
+
+assets/games/pathfinding_astar.svg
+
+
+
+Optimal path cost on grids
+
+
+
+O((V+E) log V) op budget
+
+
+
+binary heap / heapq
+
+
+
+f-scores non-decreasing for expanded nodes; path contiguous
+
+
+
+
+
+forest_fire_percolation
+
+
+
+assets/environmental_science/forest_fire_percolation.svg
+
+
+
+Cluster connectivity / spanning
+
+
+
+O(N) or O(N α(N)) union-find
+
+
+
+grid + BFS/UF
+
+
+
+burned cells ⊆ fuel cells; no diagonal leak if 4-connected
+
+
+
+
+
+graph_queue
+
+
+
+social + serverless queue SVGs
+
+
+
+BFS layers / FIFO occupancy
+
+
+
+O(V+E) / O(ops)
+
+
+
+deque for BFS
+
+
+
+queue conservation; SIR totals if epidemic fixture
+
+DSA runner algorithm
+
+
+
+
+
+Discover cases under cases/
+
+
+
+For each case: load candidate (repo module or --target snippet)
+
+
+
+Run golden fixtures → assert equality
+
+
+
+Run N randomized/property inputs vs reference.py (differential)
+
+
+
+Instrument op-count / wall time vs spec.yaml budgets
+
+
+
+AST/structure probe: required types present (heapq, deque, etc.) when declared
+
+
+
+Run invariants.py
+
+
+
+Aggregate; if any fail, emit DSA remediation block last in the report
+
+Complexity measurement (practical, not asymptotic proof)
+
+
+
+
+
+Prefer instrumented op counters (compare/heap push) over wall-clock alone
+
+
+
+Wall-clock as soft budget (CI variance)
+
+
+
+Scale inputs {n=100, 1k, 10k}; fail if growth exceeds declared family by configured factor
+
+
+
+Phase 5 — Runtime mirror (Lambda)
+
+After agent harness is stable, add thin reuse — same package, second host:
+
+
+
+
+
+backend/functions/shared/validators.py calls harness.pipeline.run(code, mode="lambda")
+
+
+
+backend/functions/llm/parse.py (stub): prepend ai/rules/ + AGENTS.md → generate plan → optional review → generate code → pipeline → only then S3 + SQS
+
+
+
+Algorithm scenarios (engineType / tags): DSA stage required; pure ODE snippets may mark dsa: skip in metadata only if case registry says N/A — default is run DSA when domain tag present
+
+
+
+Persist knowledge entries to local JSONL now; DynamoDB table later
+
+sequenceDiagram
+  participant User
+  participant LLM as LLM_Lambda
+  participant Harness as harness.pipeline
+  participant SQS
+  participant Fargate
+
+  User->>LLM: natural language scenario
+  LLM->>LLM: prepend AGENTS.md
+  LLM->>Harness: generated code
+  Harness->>Harness: AST..Arch..Behaviour..DSA
+  alt DSA fail
+    Harness-->>LLM: remediation
+    LLM->>Harness: revised code
+  else pass
+    Harness-->>LLM: PipelineReport pass
+    LLM->>SQS: SimulationStartPayload
+    SQS->>Fargate: start task
+  end
+
+
+
+Phase 6 — SDK stub + CI
+
+
+
+
+
+sdk/smul_gpse_sdk/engine.py: abstract PluginEngine with on_init, on_step, start_loop stub
+
+
+
+harness/tests/: unit tests for AST validator, architecture rules, DSA runner on reference solutions (must pass)
+
+
+
+.github/workflows/harness.yml: on PR → ruff, mypy, pytest harness/tests, python -m harness --mode ci
+
+
+
+Fail PR if DSA reference suite red
+
+
+
+Phase 7 — Inferential layer (optional, after computational)
+
+
+
+
+
+
+
+Agent
+
+
+
+Placement
+
+
+
+Role
+
+
+
+
+
+CodeReviewAgent
+
+
+
+Feedforward after plan, before code
+
+
+
+Score 1–10; physics/serverless/security
+
+
+
+
+
+CodeJudgeAgent
+
+
+
+Feedback after behaviour, before DSA
+
+
+
+Semantic “does this match the scenario?”
+
+Hard rule: inferential sensors may add confidence but must not replace or reorder past DSA. DSA remains the last gate.
+
+
+
+Steering loop (human + /harness-steer)
+
+Fingerprint = hash(stage + rule_id + normalized_message).
+
+When the same fingerprint appears ≥2 times in harness/knowledge/entries/:
+
+
+
+
+
+/harness-steer opens
+
+
+
+Propose: tighten AGENTS.md OR add arch rule OR add DSA fixture OR improve remediation text
+
+
+
+Human approves; agent applies harness patch
+
+
+
+Log “ratchet” entry
+
+This is Fowler’s steering loop + Osmani’s ratchet made operational.
+
+
+
+Timing: keep quality left
+
+
+
+
+
+
+
+When
+
+
+
+What runs
+
+
+
+
+
+Every agent stop
+
+
+
+Full pipeline including DSA (hook)
+
+
+
+
+
+After substantive .py edit (optional later)
+
+
+
+AST-only
+
+
+
+
+
+Every PR
+
+
+
+Full CI harness workflow
+
+
+
+
+
+Nightly (later)
+
+
+
+Broader property fuzz, mutation of DSA cases
+
+
+
+
+
+Runtime Lambda
+
+
+
+Full pipeline before SQS; DSA last for tagged algos
+
+
+
+Definition of done (first ship)
+
+
+
+
+
+Canonical contracts written in AGENTS.md / CONTEXT.md / schemas/
+
+
+
+python -m harness implements ordered stages with DSA last
+
+
+
+Architecture fitness mid-loop blocks progression when red
+
+
+
+Stop hook emits followup_message on failure; {} on pass; respects aborted + loop_limit
+
+
+
+≥3 DSA domains with golden + differential + complexity + invariants; reference solutions green
+
+
+
+Five project skills with checkable completion criteria
+
+
+
+Lambda validators.py stub imports the same pipeline
+
+
+
+CI workflow runs harness on PR
+
+
+
+Knowledge JSONL logging works for pass/fail
+
+Out of scope (first ship)
+
+
+
+
+
+Full React IDE, Cognito, MediaPipe, live Fargate physics
+
+
+
+Mutation testing, k6 load tests, chaos FIS
+
+
+
+Making inferential judges required gates
+
+
+
+DynamoDB-backed knowledge (local JSONL first)
+
+Implementation order (execute when approved)
+
+
+
+
+
+Phase 0 contracts + substrate
+
+
+
+Phase 2 sensors (pipeline skeleton + AST + DSA runner shell)
+
+
+
+Phase 4 seed cases (so DSA has teeth)
+
+
+
+Phase 1 skills
+
+
+
+Phase 3 stop hook
+
+
+
+Phase 6 CI + SDK stub
+
+
+
+Phase 5 runtime mirror stub
+
+
+
+Phase 7 inferential prompts
+

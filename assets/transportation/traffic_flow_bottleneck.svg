@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#1c1f2e" />
+      <stop offset="100%" stop-color="#0b0d16" />
+    </radialGradient>
+  </defs>
+
+  <style>
+    .title { font-family: 'Outfit', 'Inter', sans-serif; font-size: 20px; fill: #ffffff; font-weight: 700; }
+    .subtitle { font-family: 'Inter', sans-serif; font-size: 12px; fill: #8b949e; }
+    .text-val { font-family: 'Fira Code', 'Courier New', monospace; font-size: 11px; fill: #e1e4e8; }
+    .text-math { font-family: 'Georgia', serif; font-size: 13px; fill: #cbd5e1; font-style: italic; }
+    .text-bold { font-weight: bold; }
+    .grid-line { stroke: #334155; stroke-dasharray: 4 4; stroke-width: 0.5; }
+    .road-boundary { stroke: #94a3b8; stroke-width: 3; fill: none; }
+    .lane-divider { stroke: #475569; stroke-width: 1.5; stroke-dasharray: 8 4; fill: none; }
+    .car-free { fill: #10b981; rx: 3; }
+    .car-slowing { fill: #f59e0b; rx: 3; }
+    .car-congested { fill: #f43f5e; rx: 3; }
+  </style>
+
+  <!-- Background -->
+  <rect width="800" height="500" rx="12" fill="url(#bgGrad)" />
+  
+  <text x="35" y="45" class="title">Scenario: Traffic Flow &amp; Bottleneck Dynamics</text>
+  <text x="35" y="65" class="subtitle">Density shockwave formation &amp; throughput constraint (Lighthill-Whitham-Richards continuum model)</text>
+
+  <!-- Road Layout (Left: 3 lanes, Middle: Merging, Right: 1 lane) -->
+  <!-- Top Road Boundary -->
+  <path d="M 50,140 L 250,140 Q 300,140 350,180 L 450,180" class="road-boundary" />
+  <!-- Bottom Road Boundary -->
+  <path d="M 50,260 L 250,260 Q 300,260 350,220 L 450,220" class="road-boundary" />
+  
+  <!-- Lane Dividers (Left side only) -->
+  <line x1="50" y1="180" x2="250" y2="180" class="lane-divider" />
+  <line x1="50" y1="220" x2="250" y2="220" class="lane-divider" />
+
+  <!-- Flow Direction Arrow -->
+  <path d="M 410,150 L 440,150" fill="none" stroke="#94a3b8" stroke-width="2.5" marker-end="url(#roadArrow)" />
+  <defs>
+    <marker id="roadArrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#94a3b8" />
+    </marker>
+  </defs>
+
+  <!-- Vehicles -->
+  <!-- Free Flow (Green) - Left side, widely spaced -->
+  <rect x="70" y="150" width="16" height="8" class="car-free" />
+  <rect x="150" y="150" width="16" height="8" class="car-free" />
+  <rect x="90" y="190" width="16" height="8" class="car-free" />
+  <rect x="180" y="190" width="16" height="8" class="car-free" />
+  <rect x="80" y="230" width="16" height="8" class="car-free" />
+
+  <!-- Slowing Down (Yellow) - approaching merge -->
+  <rect x="230" y="150" width="16" height="8" class="car-slowing" />
+  <rect x="220" y="230" width="16" height="8" class="car-slowing" />
+  <rect x="260" y="180" width="16" height="8" class="car-slowing" />
+
+  <!-- Congested bottleneck (Red) - merged & closely packed -->
+  <rect x="300" y="196" width="16" height="8" class="car-congested" />
+  <rect x="325" y="196" width="16" height="8" class="car-congested" />
+  <rect x="350" y="196" width="16" height="8" class="car-congested" />
+  <rect x="375" y="196" width="16" height="8" class="car-congested" />
+  <rect x="400" y="196" width="16" height="8" class="car-congested" />
+  <rect x="425" y="196" width="16" height="8" class="car-free" /> <!-- Cleared area -->
+
+  <!-- Labels on Road -->
+  <text x="60" y="295" class="text-val" fill="#10b981">Free Flow</text>
+  <text x="210" y="295" class="text-val" fill="#f59e0b">Shock Wave</text>
+  <text x="320" y="295" class="text-val" fill="#f43f5e">Bottleneck</text>
+
+  <!-- Flow Chart (Right) -->
+  <rect x="490" y="100" width="280" height="230" rx="8" fill="#0d1117" stroke="#334155" />
+  <line x1="510" y1="300" x2="750" y2="300" stroke="#8b949e" stroke-width="1.5" />
+  <line x1="510" y1="130" x2="510" y2="300" stroke="#8b949e" stroke-width="1.5" />
+  <line x1="510" y1="130" x2="750" y2="130" class="grid-line" />
+  <line x1="510" y1="215" x2="750" y2="215" class="grid-line" />
+
+  <!-- Flow density curve -->
+  <path d="M 510,300 Q 610,130 710,300" fill="none" stroke="#f59e0b" stroke-width="2.5" />
+  <circle cx="610" cy="142" r="5" fill="#f59e0b" />
+  <line x1="610" y1="142" x2="610" y2="300" class="grid-line" stroke="#f59e0b" />
+
+  <text x="525" y="125" class="text-val" fill="#f59e0b">FLOW VS DENSITY q(ρ)</text>
+  <text x="625" y="160" class="text-val" fill="#f59e0b">Max Flow</text>
+
+  <!-- Mathematics Panel (Bottom Right) -->
+  <rect x="490" y="345" width="280" height="110" rx="8" fill="#1e293b" stroke="#334155" />
+  <text x="505" y="370" class="text-val text-bold" fill="#ffffff">CONTINUUM TRAFFIC MODEL</text>
+  <text x="505" y="390" class="text-math">∂ρ/∂t + ∂q(ρ)/∂x = 0,  q = ρ v(ρ)</text>
+  <text x="505" y="415" class="text-val">Density (ρ): <tspan fill="#f43f5e">84 vehicles/km</tspan></text>
+  <text x="505" y="435" class="text-val">Shockwave Speed: <tspan fill="#f59e0b">-12.4 km/h</tspan></text>
+</svg>

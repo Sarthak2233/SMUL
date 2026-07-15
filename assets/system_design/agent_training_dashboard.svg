@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#141824" />
+      <stop offset="100%" stop-color="#0a0a0f" />
+    </radialGradient>
+    
+    <!-- Chart Gradients -->
+    <linearGradient id="chartFill" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#10b981" stop-opacity="0.0" />
+    </linearGradient>
+    
+    <linearGradient id="lossFill" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ff7b72" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#ff7b72" stop-opacity="0.0" />
+    </linearGradient>
+
+    <!-- Glowing Effects -->
+    <filter id="emeraldGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-family: 'Outfit', 'Inter', sans-serif; font-size: 22px; fill: #ffffff; font-weight: 700; }
+    .subtitle { font-family: 'Inter', sans-serif; font-size: 13px; fill: #8b949e; }
+    .card-title { font-family: 'Outfit', sans-serif; font-size: 13px; fill: #8b949e; font-weight: 600; letter-spacing: 0.5px; }
+    .hud-val { font-family: 'Fira Code', monospace; font-size: 24px; fill: #ffffff; font-weight: bold; }
+    .hud-lbl { font-family: 'Inter', sans-serif; font-size: 10px; fill: #8b949e; font-weight: 500; }
+    .code-text { font-family: 'Fira Code', monospace; font-size: 11px; fill: #c9d1d9; }
+    .chart-axis { stroke: #30363d; stroke-width: 1.5; }
+    .chart-line { fill: none; stroke-width: 2.5; stroke-linecap: round; }
+  </style>
+
+  <!-- Background -->
+  <rect width="1000" height="600" rx="12" fill="url(#bgGrad)" />
+
+  <g opacity="0.03">
+    <path d="M 0,50 L 1000,50 M 0,100 L 1000,100 M 0,150 L 1000,150 M 0,200 L 1000,200 M 0,250 L 1000,250 M 0,300 L 1000,300 M 0,350 L 1000,350 M 0,400 L 1000,400 M 0,450 L 1000,450 M 0,500 L 1000,500" stroke="#ffffff" />
+    <path d="M 100,0 L 100,600 M 200,0 L 200,600 M 300,0 L 300,600 M 400,0 L 400,600 M 500,0 L 500,600 M 600,0 L 600,600 M 700,0 L 700,600 M 800,0 L 800,600 M 900,0 L 900,600" stroke="#ffffff" />
+  </g>
+
+  <!-- Header -->
+  <text x="40" y="50" class="title">SMUL GPSE — AI Agent Training Dashboard Mockup</text>
+  <text x="40" y="72" class="subtitle">Real-time RL parameters, loss validation curves, and spot container execution metadata</text>
+
+  <!-- ==================== HUD ROW (TOP METRICS) ==================== -->
+  <g transform="translate(40, 100)">
+    <!-- Metric 1: Episode -->
+    <rect width="210" height="70" rx="8" fill="#161b26" stroke="#30363d" stroke-width="1.5" />
+    <text x="15" y="22" class="hud-lbl">CURRENT EPISODE</text>
+    <text x="15" y="52" class="hud-val" fill="#58a6ff">1,482 <tspan font-size="12px" font-weight="normal" fill="#8b949e">/ 5,000</tspan></text>
+    
+    <!-- Metric 2: Mean Reward -->
+    <g transform="translate(230, 0)">
+      <rect width="210" height="70" rx="8" fill="#161b26" stroke="#30363d" stroke-width="1.5" />
+      <text x="15" y="22" class="hud-lbl">MEAN EPISODIC REWARD (100 EP)</text>
+      <text x="15" y="52" class="hud-val" fill="#10b981">198.42 <tspan font-size="12px" font-weight="normal" fill="#8b949e">/ 200</tspan></text>
+    </g>
+
+    <!-- Metric 3: Current Loss -->
+    <g transform="translate(460, 0)">
+      <rect width="210" height="70" rx="8" fill="#161b26" stroke="#30363d" stroke-width="1.5" />
+      <text x="15" y="22" class="hud-lbl">DQN HUBER LOSS</text>
+      <text x="15" y="52" class="hud-val" fill="#ff7b72">0.0042</text>
+    </g>
+
+    <!-- Metric 4: Training Speed -->
+    <g transform="translate(690, 0)">
+      <rect width="230" height="70" rx="8" fill="#161b26" stroke="#30363d" stroke-width="1.5" />
+      <text x="15" y="22" class="hud-lbl">COMPUTE VELOCITY</text>
+      <text x="15" y="52" class="hud-val" fill="#e1c532">426.5 <tspan font-size="12px" font-weight="normal" fill="#8b949e">steps/sec</tspan></text>
+    </g>
+  </g>
+
+  <!-- ==================== REWARD CURVE CHART (Bottom-Left) ==================== -->
+  <g transform="translate(40, 190)">
+    <rect width="520" height="370" rx="10" fill="#10121d" stroke="#30363d" stroke-width="1.5" />
+    <rect x="0" y="0" width="520" height="35" rx="10" fill="#181c2b" stroke="#30363d" />
+    <text x="15" y="22" class="card-title" fill="#10b981">CUMULATIVE EPISODIC REWARD</text>
+    
+    <!-- Chart Grid -->
+    <g transform="translate(50, 60)" opacity="0.3">
+      <line x1="0" y1="50" x2="430" y2="50" stroke="#30363d" stroke-dasharray="2 2" />
+      <line x1="0" y1="100" x2="430" y2="100" stroke="#30363d" stroke-dasharray="2 2" />
+      <line x1="0" y1="150" x2="430" y2="150" stroke="#30363d" stroke-dasharray="2 2" />
+      <line x1="0" y1="200" x2="430" y2="200" stroke="#30363d" stroke-dasharray="2 2" />
+      <line x1="0" y1="250" x2="430" y2="250" stroke="#30363d" stroke-dasharray="2 2" />
+    </g>
+    
+    <!-- Chart Axis -->
+    <line x1="50" y1="310" x2="480" y2="310" class="chart-axis" />
+    <line x1="50" y1="60" x2="50" y2="310" class="chart-axis" />
+    <text x="480" y="325" class="hud-lbl" text-anchor="end">Episodes</text>
+    <text x="45" y="60" class="hud-lbl" text-anchor="end">Reward</text>
+    
+    <!-- Reward Target Threshold Line (e.g. 195.0 to solve Cart-Pole) -->
+    <line x1="50" y1="90" x2="480" y2="90" stroke="#58a6ff" stroke-width="1.5" stroke-dasharray="4 2" />
+    <text x="470" y="84" class="code-text" fill="#58a6ff" font-size="9px">Goal Threshold (195.0)</text>
+
+    <!-- Path Area Fill -->
+    <path d="M 50,305 Q 100,290 150,260 T 250,200 T 350,110 T 450,92 L 480,91 L 480,310 Z" fill="url(#chartFill)" />
+    <!-- Line -->
+    <path d="M 50,305 Q 100,290 150,260 T 250,200 T 350,110 T 450,92 L 480,91" class="chart-line" stroke="#10b981" filter="url(#emeraldGlow)" />
+  </g>
+
+  <!-- ==================== LOSS CURVE & CONFIG (Bottom-Right) ==================== -->
+  <g transform="translate(580, 190)">
+    <!-- Loss curve card -->
+    <rect width="380" height="175" rx="10" fill="#10121d" stroke="#30363d" stroke-width="1.5" />
+    <rect x="0" y="0" width="380" height="35" rx="10" fill="#181c2b" stroke="#30363d" />
+    <text x="15" y="22" class="card-title" fill="#ff7b72">POLICY LEARNING LOSS (HUBER)</text>
+
+    <!-- Axis -->
+    <line x1="50" y1="145" x2="340" y2="145" class="chart-axis" />
+    <line x1="50" y1="50" x2="50" y2="145" class="chart-axis" />
+
+    <!-- Loss line fill -->
+    <path d="M 50,60 Q 90,80 130,95 T 210,120 T 290,135 L 340,138 L 340,145 Z" fill="url(#lossFill)" />
+    <!-- Loss line -->
+    <path d="M 50,60 Q 90,80 130,95 T 210,120 T 290,135 L 340,138" class="chart-line" stroke="#ff7b72" />
+
+    <!-- Config info card -->
+    <g transform="translate(0, 190)">
+      <rect width="380" height="180" rx="10" fill="#10121d" stroke="#30363d" stroke-width="1.5" />
+      <rect x="0" y="0" width="380" height="35" rx="10" fill="#181c2b" stroke="#30363d" />
+      <text x="15" y="22" class="card-title" fill="#58a6ff">TRAINING CONFIGURATION &amp; PERSISTENCE</text>
+
+      <g transform="translate(15, 50)">
+        <text x="0" y="15" class="code-text" font-size="10px">Hyperparameters:</text>
+        <text x="15" y="32" class="code-text" font-size="10px" fill="#8b949e">learning_rate = <tspan fill="#ffffff">0.0003</tspan></text>
+        <text x="15" y="47" class="code-text" font-size="10px" fill="#8b949e">gamma (discount) = <tspan fill="#ffffff">0.99</tspan></text>
+        <text x="15" y="62" class="code-text" font-size="10px" fill="#8b949e">epsilon_decay = <tspan fill="#ffffff">0.995</tspan></text>
+        
+        <line x1="0" y1="75" x2="350" y2="75" stroke="#30363d" />
+        
+        <text x="0" y="95" class="code-text" font-size="10px">S3 Checkpointing:</text>
+        <text x="15" y="112" class="code-text" font-size="9px" fill="#8b949e">Bucket: <tspan fill="#58a6ff">s3://smul-gpse-models/</tspan></text>
+        <text x="15" y="127" class="code-text" font-size="9px" fill="#84fab0">Last Saved: cartpole_dqn_ep1400.pt (Size: 4.2MB)</text>
+      </g>
+    </g>
+  </g>
+</svg>

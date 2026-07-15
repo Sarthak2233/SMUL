@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#1c1f2e" />
+      <stop offset="100%" stop-color="#0b0d16" />
+    </radialGradient>
+    
+    <!-- Lorenz Glow -->
+    <filter id="attractorGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-family: 'Outfit', 'Inter', sans-serif; font-size: 20px; fill: #ffffff; font-weight: 700; }
+    .subtitle { font-family: 'Inter', sans-serif; font-size: 12px; fill: #8b949e; }
+    .text-val { font-family: 'Fira Code', 'Courier New', monospace; font-size: 11px; fill: #e1e4e8; }
+    .text-math { font-family: 'Georgia', serif; font-size: 13px; fill: #cbd5e1; font-style: italic; }
+    .text-bold { font-weight: bold; }
+    .grid-line { stroke: #334155; stroke-dasharray: 4 4; stroke-width: 0.5; }
+    .trail { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  </style>
+
+  <!-- Background -->
+  <rect width="800" height="500" rx="12" fill="url(#bgGrad)" />
+  
+  <text x="35" y="45" class="title">Scenario: Chaotic Lorenz Strange Attractor</text>
+  <text x="35" y="65" class="subtitle">Butterfly state-space trajectories of a chaotic weather convection system (Runge-Kutta 4th-Order integration)</text>
+
+  <!-- Projection Grid lines -->
+  <line x1="100" y1="260" x2="700" y2="260" class="grid-line" />
+  <line x1="400" y1="100" x2="400" y2="420" class="grid-line" />
+
+  <!-- Lorenz Attractor Path (Detailed Butterfly Shape) -->
+  <!-- Left wing -->
+  <path d="M 400,260 
+           C 320,180 220,160 200,220 
+           C 180,280 260,380 370,300 
+           C 420,260 480,180 580,160 
+           C 620,150 640,240 590,300 
+           C 540,360 450,300 400,260 
+           C 350,220 280,180 220,200 
+           C 170,220 160,290 240,340 
+           C 310,380 380,310 410,270 
+           C 440,230 500,160 560,180 
+           C 610,200 620,270 550,320 
+           C 490,360 430,300 400,260 Z" 
+        class="trail" stroke="#ec4899" stroke-width="2.5" filter="url(#attractorGlow)" />
+
+  <path d="M 400,260 
+           C 330,190 240,170 210,210 
+           C 180,250 250,360 360,310 
+           C 410,285 470,195 560,175 
+           C 610,165 630,235 580,285 
+           C 530,335 460,295 400,260 Z" 
+        class="trail" stroke="#a855f7" stroke-width="1.2" opacity="0.6" />
+
+  <!-- Active Position Indicator (glowing tip) -->
+  <circle cx="200" cy="220" r="5" fill="#ffffff" filter="url(#attractorGlow)" />
+  <text x="135" y="215" class="text-math" fill="#ffffff">Current State P(t)</text>
+
+  <!-- Left Center Coordinate Tag -->
+  <text x="355" y="115" class="text-math">Z-Axis</text>
+  <text x="680" y="280" class="text-math">X-Axis</text>
+
+  <!-- Mathematics Panel (Bottom Right) -->
+  <rect x="490" y="320" width="280" height="135" rx="8" fill="#1e293b" stroke="#334155" />
+  <text x="505" y="345" class="text-val text-bold" fill="#ffffff">LORENZ DYNAMIC SYSTEM</text>
+  <text x="505" y="370" class="text-math">dx/dt = σ(y - x)</text>
+  <text x="505" y="388" class="text-math">dy/dt = x(ρ - z) - y</text>
+  <text x="505" y="406" class="text-math">dz/dt = xy - βz</text>
+  <text x="505" y="426" class="text-val">Parameters: σ=10.0, ρ=28.0, β=8/3</text>
+  <text x="505" y="442" class="text-val">System state: <tspan fill="#ec4899">CHAOTIC ATTRACTOR</tspan></text>
+</svg>
